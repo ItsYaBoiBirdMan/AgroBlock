@@ -4,12 +4,8 @@ using UnityEngine;
 
 public class UIManager : MonoBehaviour
 {
-    [SerializeField] private GameObject BlockScreen;
-
-    [SerializeField] private GameObject SpecificBlockScreen;
-
-    public void test()
-    {
-        
-    }
+    [SerializeField] private TaskManager taskManager;
+    [SerializeField] private List<GameObject> tasksText;
+    
+    
 }
