@@ -26,9 +26,29 @@ public class Task : ScriptableObject
         return pointsReward;
     }   
     
+    public int GetProgressGoal()
+    {
+        return progressGoalValue;
+    }
+
+    public int GetCurrentProgress()
+    {
+        return progressCurrentValue;
+    }
+
+    public void AddToCurrentProgressValue(int value)
+    {
+        if (progressCurrentValue + value <= progressGoalValue) progressCurrentValue += value;
+        else progressCurrentValue = progressGoalValue;
+    }
+
+    public void RestProgress()
+    {
+        progressCurrentValue = 0;
+    }
     public bool CheckIfTaskIsComplete()
     {
         if (progressCurrentValue == progressGoalValue) return true;
-        else return false;
+        return false;
     }
 }

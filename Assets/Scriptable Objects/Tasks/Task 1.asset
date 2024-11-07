@@ -14,8 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   taskTitle: Check Status
   taskDesc: Check the status of your AgroBlocks 3 times.
-  progressGoalValue: 0
+  progressGoalValue: 100
   progressCurrentValue: 0
-  isCompleted: 1
-  pointsAdded: 0
   pointsReward: 100

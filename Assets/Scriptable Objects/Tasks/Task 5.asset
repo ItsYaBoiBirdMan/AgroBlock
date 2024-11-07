@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ebc1f5767cb36784a9be5d3a03ea6809, type: 3}
   m_Name: Task 5
   m_EditorClassIdentifier: 
-  taskTitle: 
+  taskTitle: Task 5
   taskDesc: 
-  progressGoalValue: 0
+  progressGoalValue: 100
   progressCurrentValue: 0
-  pointsReward: 0
+  pointsReward: 500

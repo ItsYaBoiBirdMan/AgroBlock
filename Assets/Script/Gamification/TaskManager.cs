@@ -6,7 +6,7 @@ using UnityEngine.Serialization;
 
 public class TaskManager : MonoBehaviour
 {
-    [SerializeField] private List<Task> AllTasks;
+    [SerializeField] private List<Task> allTasks;
     [SerializeField] private List<Task> currentTasks;
     [SerializeField] private List<Task> completedTasks;
 
@@ -36,6 +36,7 @@ public class TaskManager : MonoBehaviour
             if (currentTasks[i].CheckIfTaskIsComplete())
             {
                 EventManager.TaskCompletedEvent.Invoke(currentTasks[i]);
+                currentTasks[i].RestProgress();
                 completedTasks.Add(currentTasks[i]);
                 currentTasks.RemoveAt(i);
             }
@@ -48,12 +49,12 @@ public class TaskManager : MonoBehaviour
         Debug.Log(task.GetPointsReward() + " added!!"); 
     }
 
-    private void Start()
+    private void Awake()
     {
         currentTasks = new List<Task>();
         completedTasks = new List<Task>();
         
-        GetRandomTasks(AllTasks, currentTasks, 3);
+        GetRandomTasks(allTasks, currentTasks, 3);
     }
 
     private void Update()
