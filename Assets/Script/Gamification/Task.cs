@@ -48,7 +48,6 @@ public class Task : ScriptableObject
     }
     public bool CheckIfTaskIsComplete()
     {
-        if (progressCurrentValue == progressGoalValue) return true;
-        return false;
+        return progressCurrentValue == progressGoalValue;
     }
 }

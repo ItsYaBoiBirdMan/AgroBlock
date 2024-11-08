@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Task 4
   m_EditorClassIdentifier: 
   taskTitle: Task 4
-  taskDesc: 
+  taskDesc: Describing Task 4 here
   progressGoalValue: 3
   progressCurrentValue: 0
   pointsReward: 400

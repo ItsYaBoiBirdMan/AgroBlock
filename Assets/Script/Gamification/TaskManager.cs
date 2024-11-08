@@ -33,12 +33,13 @@ public class TaskManager : MonoBehaviour
     {
         for (int i = 0; i < currentTasks.Count; i++)
         {
+            if (currentTasks[i] == null) return;
             if (currentTasks[i].CheckIfTaskIsComplete())
             {
                 EventManager.TaskCompletedEvent.Invoke(currentTasks[i]);
                 currentTasks[i].RestProgress();
                 completedTasks.Add(currentTasks[i]);
-                currentTasks.RemoveAt(i);
+                currentTasks[i] = null;
             }
         }
     }
@@ -47,6 +48,17 @@ public class TaskManager : MonoBehaviour
     {
         userDataManager.AddPoints(task.GetPointsReward());
         Debug.Log(task.GetPointsReward() + " added!!"); 
+    }
+
+    public void RefreshTasks()
+    {
+        for (int i = 0; i < allTasks.Count; i++)
+        {
+            allTasks[i].RestProgress();
+        }
+
+        currentTasks = new List<Task>();
+        GetRandomTasks(allTasks, currentTasks, 3);
     }
 
     private void Awake()
