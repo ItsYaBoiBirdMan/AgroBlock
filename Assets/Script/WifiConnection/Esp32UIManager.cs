@@ -18,17 +18,17 @@ namespace Script.WifiConnection {
             if(lightText){lightText.text = null; socketClient.OnLightDataReceived += UpdateTemperatureUI;}
 
             if (socketClient.isConnected){
-                socketClient.SendMessage(messageText);
+                socketClient.SendMessageToEsp32(messageText);
             } else {
-                socketClient.StartUDPDiscovery();
+                Debug.Log("Not Connected");
             }
             InvokeRepeating(nameof(SendMessagePeriodically), 0.5f, 0.5f);
         }
         void SendMessagePeriodically() {
             if (socketClient.isConnected) {
-                socketClient.SendMessage(messageText);  // Sends the same message each time
+                socketClient.SendMessageToEsp32(messageText);  // Sends the same message each time
             } else {
-                socketClient.StartUDPDiscovery();
+                Debug.Log("Not Connected");
             }
         }
 
@@ -37,7 +37,7 @@ namespace Script.WifiConnection {
             if ((!temperatureText || temperatureText.text != null) && (!humidityText || humidityText.text != null) &&
                 (!lightText || lightText.text != null)) return;
             if (socketClient.isConnected) {
-                socketClient.SendMessage(messageText);
+                socketClient.SendMessageToEsp32(messageText);
             } else {
                 socketClient.StartUDPDiscovery();
             }

@@ -734,11 +734,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb099e13b45ea2f49806b799343d2f97, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  socketClient: {fileID: 0}
-  temperatureText: {fileID: 0}
-  humidityText: {fileID: 0}
-  lightText: {fileID: 0}
-  messageText: 
+  socketClient: {fileID: 1269053209}
+  temperatureText: {fileID: 428576059}
+  humidityText: {fileID: 583120767}
+  lightText: {fileID: 901079320}
+  messageText: Values Esp 0
 --- !u!114 &1269053209
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -108,7 +108,7 @@ namespace Script.WifiConnection {
                                 OnHumidityDataReceived?.Invoke(humidity);
                             } else if (messageType == "values" && jsonObj.ContainsKey("humidity")) {
                                 if (jsonObj.ContainsKey("humidity")) {
-                                    float temperature = (float)jsonObj["humidity"];
+                                    float temperature = (float)jsonObj["temperature"];
                                     OnTemperatureDataReceived?.Invoke(temperature);
                                 }
                                 if (jsonObj.ContainsKey("humidity")) {
