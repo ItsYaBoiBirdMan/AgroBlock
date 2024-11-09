@@ -107,7 +107,7 @@ namespace Script.WifiConnection {
                                 float humidity = (float)jsonObj["humidity"];
                                 OnHumidityDataReceived?.Invoke(humidity);
                             } else if (messageType == "values" && jsonObj.ContainsKey("humidity")) {
-                                if (jsonObj.ContainsKey("humidity")) {
+                                if (jsonObj.ContainsKey("temperature")) {
                                     float temperature = (float)jsonObj["temperature"];
                                     OnTemperatureDataReceived?.Invoke(temperature);
                                 }
@@ -117,7 +117,7 @@ namespace Script.WifiConnection {
                                 }
                                 if (jsonObj.ContainsKey("light")) {
                                     // ReSharper disable once InconsistentNaming
-                                    float Light = (float)jsonObj["humidity"];
+                                    float Light = (float)jsonObj["light"];
                                     OnLightDataReceived?.Invoke(Light);
                                 }
                             }

@@ -13,10 +13,10 @@ namespace Script.WifiConnection {
 
         void Start() {
             // Subscribe to events
-            if(temperatureText){temperatureText.text = null; socketClient.OnTemperatureDataReceived += UpdateLightUI;}
+            if(temperatureText){temperatureText.text = null; socketClient.OnTemperatureDataReceived += UpdateTemperatureUI;}
             if(humidityText){humidityText.text = null; socketClient.OnHumidityDataReceived += UpdateHumidityUI;}
-            if(lightText){lightText.text = null; socketClient.OnLightDataReceived += UpdateTemperatureUI;}
-
+            if(lightText){lightText.text = null; socketClient.OnLightDataReceived += UpdateLightUI;}
+            
             if (socketClient.isConnected){
                 socketClient.SendMessageToEsp32(messageText);
             } else {
@@ -55,7 +55,7 @@ namespace Script.WifiConnection {
 
         // Event handlers
         private void UpdateLightUI(float lightData) {
-            lightText.text = "humidity: " + lightData + "%";
+            lightText.text = "Light: " + lightData + "%";
         }
 
         private void UpdateHumidityUI(float humidity) {
@@ -63,7 +63,7 @@ namespace Script.WifiConnection {
         }
 
         private void UpdateTemperatureUI(float temperature) {
-            temperatureText.text = $"Temperature: {temperature}" + "Cº";
+            temperatureText.text = "Temperature:" + temperature + "Cº";
         }
 
         void OnDestroy() {
