@@ -33,7 +33,7 @@ public class TaskManager : MonoBehaviour
     {
         for (int i = 0; i < currentTasks.Count; i++)
         {
-            if (currentTasks[i] == null) return;
+            if (currentTasks[i] == null) continue;
             if (currentTasks[i].CheckIfTaskIsComplete())
             {
                 EventManager.TaskCompletedEvent.Invoke(currentTasks[i]);
@@ -65,7 +65,10 @@ public class TaskManager : MonoBehaviour
     {
         currentTasks = new List<Task>();
         completedTasks = new List<Task>();
-        
+        for (int i = 0; i < allTasks.Count; i++)
+        {
+            allTasks[i].RestProgress();
+        }
         GetRandomTasks(allTasks, currentTasks, 3);
     }
 

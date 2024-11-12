@@ -8,6 +8,9 @@ public class UIManager : MonoBehaviour
 {
     [SerializeField] private TaskManager taskManager;
     [SerializeField] private List<GameObject> tasksText;
+    [SerializeField] private GameObject SideMenu;
+    [SerializeField] private Transform SideMenuShowing;
+    [SerializeField] private Transform SideMenuHidden;
 
     [SerializeField]private List<Task> _currentTasks;
 
@@ -61,11 +64,22 @@ public class UIManager : MonoBehaviour
         UpdateDisplayedTasks();
         Debug.Log("Refresh");
     }
+
+    public void ShowSideMenu()
+    {
+        SideMenu.transform.position = Vector3.MoveTowards(SideMenu.transform.position, SideMenuShowing.position, 100);
+    }
+    
     private void Start()
     {
         _currentTasks = new List<Task>();
         _currentTasks = taskManager.GetCurrentTasks();
         
         UpdateDisplayedTasks();
+    }
+
+    private void Update()
+    {
+        SideMenu.transform.position = Vector2.MoveTowards(SideMenu.transform.position, SideMenuShowing.position, 50);
     }
 }
