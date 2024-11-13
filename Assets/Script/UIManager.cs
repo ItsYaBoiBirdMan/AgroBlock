@@ -1,30 +1,53 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
+    [Header("Task System")] 
+    
+    [SerializeField] private GameObject TaskMenu;
     [SerializeField] private TaskManager taskManager;
-    [SerializeField] private List<GameObject> tasksText;
+    [SerializeField] private List<GameObject> tasksText; 
+    [SerializeField]private List<Task> currentTasks;
+    
+    [Header("Main Menu")] 
+    
+    [SerializeField] private GameObject MainMenu;
     [SerializeField] private GameObject SideMenu;
     [SerializeField] private Transform SideMenuShowing;
     [SerializeField] private Transform SideMenuHidden;
+    [SerializeField] private List<Button> ButtonsToBeDisabled;
+    [SerializeField] private GameObject CloseSideMenuButton;
 
-    [SerializeField]private List<Task> _currentTasks;
+    [Header("Screen Positions")] 
+    
+    [SerializeField] private Transform MiddleOfScreen;
+    [SerializeField] private Transform OutsideLeft;
+    [SerializeField] private Transform OutsideRight;
+    
+    
+    private bool _shouldSideMenuSlideIn;
+    private bool _shouldSideMenuSlideOut;
+
+    private bool _shouldTaskMenuSlideIn;
+    private bool _shouldTaskMenuSlideOut;
 
 
     private void UpdateDisplayedTasks()
     {
         for (int i = 0; i < tasksText.Count; i++)
         {
-            if(!_currentTasks[i]) continue;
-            tasksText[i].GetComponent<Text>().text = _currentTasks[i].GetTitle();
+            if(!currentTasks[i]) continue;
+            tasksText[i].GetComponent<Text>().text = currentTasks[i].GetTitle();
             tasksText[i].GetComponent<Text>().color = Color.white;
-            tasksText[i].transform.GetChild(0).GetComponent<Slider>().maxValue = _currentTasks[i].GetProgressGoal();
-            tasksText[i].transform.GetChild(0).GetComponent<Slider>().value = _currentTasks[i].GetCurrentProgress();
-            tasksText[i].transform.GetChild(1).GetComponent<Text>().text = _currentTasks[i].GetDesc();
+            tasksText[i].transform.GetChild(0).GetComponent<Slider>().maxValue = currentTasks[i].GetProgressGoal();
+            tasksText[i].transform.GetChild(0).GetComponent<Slider>().value = currentTasks[i].GetCurrentProgress();
+            tasksText[i].transform.GetChild(1).GetComponent<Text>().text = currentTasks[i].GetDesc();
         }
     }
 
@@ -32,8 +55,8 @@ public class UIManager : MonoBehaviour
     {
         for (int i = 0; i < tasksText.Count; i++)
         {
-            if(!_currentTasks[i]) continue;
-            tasksText[i].transform.GetChild(0).GetComponent<Slider>().value = _currentTasks[i].GetCurrentProgress();
+            if(!currentTasks[i]) continue;
+            tasksText[i].transform.GetChild(0).GetComponent<Slider>().value = currentTasks[i].GetCurrentProgress();
         }
     }
 
@@ -44,13 +67,13 @@ public class UIManager : MonoBehaviour
     }
     public void SimulateTaskProgress(int index)
     {
-        if (_currentTasks[index] != null)
+        if (currentTasks[index] != null)
         {
-            var addedProgress = Mathf.RoundToInt(_currentTasks[index].GetProgressGoal() * (25 / 100f));
+            var addedProgress = Mathf.RoundToInt(currentTasks[index].GetProgressGoal() * (25 / 100f));
             if (addedProgress < 1) addedProgress = 1;
-            _currentTasks[index].AddToCurrentProgressValue(addedProgress);
+            currentTasks[index].AddToCurrentProgressValue(addedProgress);
             UpdateDisplayedTasks();
-            if (_currentTasks[index].GetCurrentProgress() == _currentTasks[index].GetProgressGoal()) RemoveDisplayedTaskWhenCompleted(index);
+            if (currentTasks[index].GetCurrentProgress() == currentTasks[index].GetProgressGoal()) RemoveDisplayedTaskWhenCompleted(index);
             UpdateProgressBar();
         }
         else Debug.Log("That Task is already completed");
@@ -58,28 +81,130 @@ public class UIManager : MonoBehaviour
 
     public void GetNewTasks()
     {
-        _currentTasks = new List<Task>();
+        currentTasks = new List<Task>();
         taskManager.RefreshTasks();
-        _currentTasks = taskManager.GetCurrentTasks();
+        currentTasks = taskManager.GetCurrentTasks();
         UpdateDisplayedTasks();
         Debug.Log("Refresh");
     }
 
-    public void ShowSideMenu()
+   
+    private void HandleSideMenuMovement()
     {
-        SideMenu.transform.position = Vector3.MoveTowards(SideMenu.transform.position, SideMenuShowing.position, 100);
+        if (_shouldSideMenuSlideIn)
+        {
+            SideMenu.transform.position =
+                Vector2.Lerp(SideMenu.transform.position, SideMenuShowing.position, 10 * Time.deltaTime);
+            
+            if (Vector2.Distance(SideMenu.transform.position, SideMenuShowing.position) < 0.1f)
+            {
+                SideMenu.transform.position = SideMenuShowing.position;
+                _shouldSideMenuSlideIn = false; 
+            }
+            
+        }
+        
+        if (_shouldSideMenuSlideOut)
+        {
+            SideMenu.transform.position =
+                Vector2.Lerp(SideMenu.transform.position, SideMenuHidden.position, 10 * Time.deltaTime);
+            
+            if (Vector2.Distance(SideMenu.transform.position, SideMenuHidden.position) < 0.1f)
+            {
+                SideMenu.transform.position = SideMenuHidden.position;
+                _shouldSideMenuSlideOut = false; 
+            }
+            
+        }
+    }
+
+    private void HandleTaskMenuMovement()
+    {
+        if (_shouldTaskMenuSlideIn)
+        {
+            MainMenu.transform.position =
+                Vector2.Lerp(MainMenu.transform.position, OutsideLeft.position, 10 * Time.deltaTime);
+            TaskMenu.transform.position =
+                Vector2.Lerp(TaskMenu.transform.position, MiddleOfScreen.position, 10 * Time.deltaTime);
+            
+            if (Vector2.Distance(TaskMenu.transform.position, MiddleOfScreen.position) < 0.1f)
+            {
+                TaskMenu.transform.position = MiddleOfScreen.position;
+                MainMenu.transform.position = OutsideLeft.position;
+                _shouldTaskMenuSlideIn = false; 
+            }
+            
+        }
+        
+        if (_shouldTaskMenuSlideOut)
+        {
+            MainMenu.transform.position =
+                Vector2.Lerp(MainMenu.transform.position, MiddleOfScreen.position, 10 * Time.deltaTime);
+            TaskMenu.transform.position =
+                Vector2.Lerp(TaskMenu.transform.position, OutsideRight.position, 10 * Time.deltaTime);
+            
+            if (Vector2.Distance(MainMenu.transform.position, MiddleOfScreen.position) < 0.1f)
+            {
+                TaskMenu.transform.position = OutsideRight.position;
+                MainMenu.transform.position = MiddleOfScreen.position;
+                _shouldTaskMenuSlideOut = false; 
+            }
+            
+        }
+    }
+    
+    public void StartSlidingIn()
+    {
+        _shouldSideMenuSlideIn = true;
+        _shouldSideMenuSlideOut = false;
+        CloseSideMenuButton.SetActive(true);
+        for (int i = 0; i < ButtonsToBeDisabled.Count; i++)
+        {
+            ButtonsToBeDisabled[i].interactable = false;
+        }
+    }
+
+    public void StartSlidingOut()
+    {
+        _shouldSideMenuSlideIn = false;
+        _shouldSideMenuSlideOut = true;
+        CloseSideMenuButton.SetActive(false);
+        for (int i = 0; i < ButtonsToBeDisabled.Count; i++)
+        {
+            ButtonsToBeDisabled[i].interactable = true;
+        }
+    }
+
+    public void StartSlidingInTaskMenu()
+    {
+        _shouldTaskMenuSlideIn = true;
+        _shouldSideMenuSlideOut = false;
+        StartSlidingOut();
+    }
+
+    public void StartSlidingOutTaskMenu()
+    {
+        _shouldTaskMenuSlideIn = false;
+        _shouldTaskMenuSlideOut = true;
+        CloseSideMenuButton.SetActive(true);
+    }
+
+    public void Test()
+    {
+        Debug.Log("Test");
     }
     
     private void Start()
     {
-        _currentTasks = new List<Task>();
-        _currentTasks = taskManager.GetCurrentTasks();
+        currentTasks = new List<Task>();
+        currentTasks = taskManager.GetCurrentTasks();
         
         UpdateDisplayedTasks();
     }
 
     private void Update()
     {
-        SideMenu.transform.position = Vector2.MoveTowards(SideMenu.transform.position, SideMenuShowing.position, 50);
+        HandleSideMenuMovement();
+        HandleTaskMenuMovement();
     }
 }
