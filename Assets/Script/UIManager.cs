@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -29,7 +30,17 @@ public class UIManager : MonoBehaviour
     [SerializeField] private Transform MiddleOfScreen;
     [SerializeField] private Transform OutsideLeft;
     [SerializeField] private Transform OutsideRight;
+    [SerializeField] private Transform OutsideBottom;
+    [SerializeField] private Transform OutsideTop;
+
+    [Header("Leaderboard")] 
     
+    [SerializeField] private GameObject Leaderboard;
+    [SerializeField] private GameObject EntryPrefab;
+    [SerializeField] private Transform EntryParent;
+    [SerializeField] private List<GameObject> EntryList;
+    [SerializeField] private UserDataManager userData;
+    [SerializeField] private List<UserDataManager> usersList;
     
     private bool _shouldSideMenuSlideIn;
     private bool _shouldSideMenuSlideOut;
@@ -37,7 +48,10 @@ public class UIManager : MonoBehaviour
     private bool _shouldTaskMenuSlideIn;
     private bool _shouldTaskMenuSlideOut;
 
+    private bool _shouldLeaderboardSlideIn;
+    private bool _shouldLeaderboardSlideOut;
 
+    //Task System
     private void UpdateDisplayedTasks()
     {
         for (int i = 0; i < tasksText.Count; i++)
@@ -64,6 +78,7 @@ public class UIManager : MonoBehaviour
     {
         tasksText[index].GetComponent<Text>().text = "Task Completed";
         tasksText[index].GetComponent<Text>().color = Color.gray;
+        SortLeaderboard();
     }
     public void SimulateTaskProgress(int index)
     {
@@ -88,7 +103,24 @@ public class UIManager : MonoBehaviour
         Debug.Log("Refresh");
     }
 
+   //Leaderboard
    
+   private void SetLeaderboardEntry(GameObject entry ,int pos, string name, int points)
+   {
+       entry.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = pos.ToString();
+       entry.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = name;
+       entry.transform.GetChild(2).GetComponent<TextMeshProUGUI>().text = points.ToString();
+   }
+
+   private void SortLeaderboard()
+   {
+       usersList = usersList.OrderByDescending(obj => obj.GetTotalPoints()).ToList();
+       for (int i = 0; i < 10; i++)
+       {
+           SetLeaderboardEntry(EntryList[i], i + 1, usersList[i].GetName(), usersList[i].GetTotalPoints());
+       }
+   }
+    //UI Movement
     private void HandleSideMenuMovement()
     {
         if (_shouldSideMenuSlideIn)
@@ -153,6 +185,41 @@ public class UIManager : MonoBehaviour
         }
     }
     
+    private void HandleLeaderboardMovement()
+    {
+        if (_shouldLeaderboardSlideIn)
+        {
+            MainMenu.transform.position =
+                Vector2.Lerp(MainMenu.transform.position, OutsideTop.position, 10 * Time.deltaTime);
+            Leaderboard.transform.position =
+                Vector2.Lerp(Leaderboard.transform.position, MiddleOfScreen.position, 10 * Time.deltaTime);
+            
+            if (Vector2.Distance(Leaderboard.transform.position, MiddleOfScreen.position) < 0.1f)
+            {
+                Leaderboard.transform.position = MiddleOfScreen.position;
+                MainMenu.transform.position = OutsideTop.position;
+                _shouldLeaderboardSlideIn = false; 
+            }
+            
+        }
+        
+        if (_shouldLeaderboardSlideOut)
+        {
+            MainMenu.transform.position =
+                Vector2.Lerp(MainMenu.transform.position, MiddleOfScreen.position, 10 * Time.deltaTime);
+            Leaderboard.transform.position =
+                Vector2.Lerp(Leaderboard.transform.position, OutsideBottom.position, 10 * Time.deltaTime);
+            
+            if (Vector2.Distance(MainMenu.transform.position, MiddleOfScreen.position) < 0.1f)
+            {
+                Leaderboard.transform.position = OutsideBottom.position;
+                MainMenu.transform.position = MiddleOfScreen.position;
+                _shouldLeaderboardSlideOut = false; 
+            }
+            
+        }
+    }
+    
     public void StartSlidingIn()
     {
         _shouldSideMenuSlideIn = true;
@@ -188,12 +255,41 @@ public class UIManager : MonoBehaviour
         _shouldTaskMenuSlideOut = true;
         CloseSideMenuButton.SetActive(true);
     }
+    
+    public void StartSlidingInLeaderboard()
+    {
+        _shouldLeaderboardSlideIn = true;
+        _shouldLeaderboardSlideOut = false;
+        StartSlidingOut();
+        SortLeaderboard();
+    }
+
+    public void StartSlidingOutLeaderboard()
+    {
+        _shouldLeaderboardSlideIn = false;
+        _shouldLeaderboardSlideOut = true;
+        CloseSideMenuButton.SetActive(true);
+    }
 
     public void Test()
     {
         Debug.Log("Test");
     }
+
+    private void Awake()
+    {
+        //EntryList = new List<GameObject>();
+        float entryDistance = 80f;
+        usersList = usersList.OrderByDescending(obj => obj.GetTotalPoints()).ToList();
+        for (int i = 0; i < 10; i++)
+        {
+            EntryList[i] = Instantiate(EntryPrefab, EntryParent);
+            EntryList[i].GetComponent<RectTransform>().anchoredPosition = new Vector3(0, -entryDistance * i, 0);
+            SetLeaderboardEntry(EntryList[i], i + 1, usersList[i].GetName(), usersList[i].GetTotalPoints());
+        }
+    }
     
+
     private void Start()
     {
         currentTasks = new List<Task>();
@@ -206,5 +302,6 @@ public class UIManager : MonoBehaviour
     {
         HandleSideMenuMovement();
         HandleTaskMenuMovement();
+        HandleLeaderboardMovement();
     }
 }
