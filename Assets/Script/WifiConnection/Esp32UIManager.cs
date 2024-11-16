@@ -9,6 +9,9 @@ namespace Script.WifiConnection {
         [SerializeField] private Text humidityText;
         [SerializeField] private Text lightText;
         [SerializeField] private String messageText;
+        [SerializeField] private Text nitrogenText;
+        [SerializeField] private Text phosphorousText;
+        [SerializeField] private Text potassiumText;
 
 
         void Start() {
@@ -16,9 +19,13 @@ namespace Script.WifiConnection {
             if(temperatureText){temperatureText.text = null; socketClient.OnTemperatureDataReceived += UpdateTemperatureUI;}
             if(humidityText){humidityText.text = null; socketClient.OnHumidityDataReceived += UpdateHumidityUI;}
             if(lightText){lightText.text = null; socketClient.OnLightDataReceived += UpdateLightUI;}
+            if(nitrogenText){nitrogenText.text = null; socketClient.OnNitrogenDataReceived += UpdateNitrogenUI;}
+            if(phosphorousText){phosphorousText.text = null; socketClient.OnPhosphorousDataReceived += UpdatePhosphorousUI;}
+            if(potassiumText){potassiumText.text = null; socketClient.OnPotassiumDataReceived += UpdatePotassiumUI;}
             
             if (socketClient.isConnected){
                 socketClient.SendMessageToEsp32(messageText);
+                socketClient.SendMessageToEsp32("NPK esp 0");
             } else {
                 Debug.Log("Not Connected");
             }
@@ -27,6 +34,7 @@ namespace Script.WifiConnection {
         void SendMessagePeriodically() {
             if (socketClient.isConnected) {
                 socketClient.SendMessageToEsp32(messageText);  // Sends the same message each time
+                socketClient.SendMessageToEsp32("NPK esp 0");
             } else {
                 Debug.Log("Not Connected");
             }
@@ -54,6 +62,10 @@ namespace Script.WifiConnection {
         }
 
         // Event handlers
+        private void UpdateTemperatureUI(float temperature) {
+            temperatureText.text = "Temperature:" + temperature + "Cº";
+        }
+        
         private void UpdateLightUI(float lightData) {
             lightText.text = "Light: " + lightData + "%";
         }
@@ -62,9 +74,19 @@ namespace Script.WifiConnection {
             humidityText.text = "humidity: " + humidity + "%";
         }
 
-        private void UpdateTemperatureUI(float temperature) {
-            temperatureText.text = "Temperature:" + temperature + "Cº";
+        private void UpdateNitrogenUI(float nitrogen) {
+            nitrogenText.text = "Nitrogen:" + nitrogen + "mg/kg";
         }
+        
+        private void UpdatePhosphorousUI(float phosphorous) {
+            phosphorousText.text = "Phosphorous: " + phosphorous + "mg/kg";
+        }
+
+        private void UpdatePotassiumUI(float potassium) {
+            potassiumText.text = "Potassium: " + potassium + "mg/kg";
+        }
+
+        
 
         void OnDestroy() {
             // Unsubscribe from events to avoid memory leaks

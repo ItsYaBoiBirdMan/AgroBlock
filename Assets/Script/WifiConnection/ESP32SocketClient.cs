@@ -23,6 +23,9 @@ namespace Script.WifiConnection {
         public event Action<float> OnTemperatureDataReceived;
         public event Action<float> OnHumidityDataReceived;
         public event Action<float> OnLightDataReceived;
+        public event Action<float> OnNitrogenDataReceived;
+        public event Action<float> OnPhosphorousDataReceived;
+        public event Action<float> OnPotassiumDataReceived;
 
         void Start() {
             StartUDPDiscovery();
@@ -119,6 +122,20 @@ namespace Script.WifiConnection {
                                     // ReSharper disable once InconsistentNaming
                                     float Light = (float)jsonObj["light"];
                                     OnLightDataReceived?.Invoke(Light);
+                                }
+                            } else if (messageType == "npk" && jsonObj.ContainsKey("nitrogen")) {
+                                if (jsonObj.ContainsKey("nitrogen")) {
+                                    float nitrogen = (float)jsonObj["nitrogen"];
+                                    OnNitrogenDataReceived?.Invoke(nitrogen);
+                                }
+                                if (jsonObj.ContainsKey("phosphorous")) {
+                                    float phosphorous = (float)jsonObj["phosphorous"];
+                                    OnPhosphorousDataReceived?.Invoke(phosphorous);
+                                }
+                                if (jsonObj.ContainsKey("potassium")) {
+                                    // ReSharper disable once InconsistentNaming
+                                    float potassium = (float)jsonObj["potassium"];
+                                    OnPotassiumDataReceived?.Invoke(potassium);
                                 }
                             }
                         }
