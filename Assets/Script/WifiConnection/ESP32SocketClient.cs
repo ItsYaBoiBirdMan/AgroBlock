@@ -26,6 +26,8 @@ namespace Script.WifiConnection {
         public event Action<float> OnNitrogenDataReceived;
         public event Action<float> OnPhosphorousDataReceived;
         public event Action<float> OnPotassiumDataReceived;
+        public event Action<bool> LightStateDataReceived;
+        public event Action<bool> ValveStateReceived;
 
         void Start() {
             StartUDPDiscovery();
@@ -109,7 +111,17 @@ namespace Script.WifiConnection {
                             if (messageType == "humidity" && jsonObj.ContainsKey("humidity")){
                                 float humidity = (float)jsonObj["humidity"];
                                 OnHumidityDataReceived?.Invoke(humidity);
-                            } else if (messageType == "values" && jsonObj.ContainsKey("humidity")) {
+                            }
+                            
+                            else if (messageType == "light_state" && jsonObj.ContainsKey("light_state")){
+                                bool light_state = (bool)jsonObj["light_state"];
+                                LightStateDataReceived?.Invoke(light_state);
+                            } else if (messageType == "valve_state" && jsonObj.ContainsKey("valve_state")){
+                                bool valve_state = (bool)jsonObj["valve_state"];
+                                ValveStateReceived?.Invoke(valve_state);
+                            } 
+                                
+                            else if (messageType == "values" && jsonObj.ContainsKey("humidity")) {
                                 if (jsonObj.ContainsKey("temperature")) {
                                     float temperature = (float)jsonObj["temperature"];
                                     OnTemperatureDataReceived?.Invoke(temperature);
