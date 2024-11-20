@@ -112,6 +112,10 @@ namespace Script.WifiConnection {
                                 float humidity = (float)jsonObj["humidity"];
                                 OnHumidityDataReceived?.Invoke(humidity);
                             }
+                            if (messageType == "temperature" && jsonObj.ContainsKey("temperature")){
+                                float temperature = (float)jsonObj["temperature"];
+                                OnTemperatureDataReceived?.Invoke(temperature);
+                            }
                             
                             else if (messageType == "light_state" && jsonObj.ContainsKey("light_state")){
                                 bool light_state = (bool)jsonObj["light_state"];
