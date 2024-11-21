@@ -12,6 +12,7 @@ public class ConditionManager : MonoBehaviour {
    private float thresholdNotEnoughWater = 70.0f; // Threshold for StateB
    private float thresholdTooWarm = 50.0f; // Threshold for StateA
    private float thresholdNotWarmEnough = 70.0f; // Threshold for StateB
+   private long lightTimer = 700; // Threshold for StateB
 
     void Start() {
         socketClient.OnTemperatureDataReceived += CheckTemperatureState;
@@ -56,8 +57,13 @@ public class ConditionManager : MonoBehaviour {
     }
     
     
-    private void CheckLightState(bool light){
-       //TODO
+    private void CheckLightState(bool light, long lightOnTime) {
+        if (light && lightOnTime >= lightTimer) {
+            TriggerState("TurnLightOff");
+        } else if (!light && lightOnTime < lightTimer) {
+            TriggerState("TurnLightOn");
+        } 
+        
     }
     
     

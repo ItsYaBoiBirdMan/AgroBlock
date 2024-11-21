@@ -116,7 +116,7 @@ namespace Script.WifiConnection {
             potassiumText.text = "Potassium: " + potassium + "mg/kg";
         }
         
-        private void UpdateLightStateUI(bool lights) {
+        private void UpdateLightStateUI(bool lights, long lightOnTime) {
             if(lights){lightStateText.text = "Lights: " + "ON";lightState = true;}
             else{lightStateText.text = "Lights: " + "OFF";lightState = false;}
         }

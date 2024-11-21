@@ -26,7 +26,7 @@ namespace Script.WifiConnection {
         public event Action<float> OnNitrogenDataReceived;
         public event Action<float> OnPhosphorousDataReceived;
         public event Action<float> OnPotassiumDataReceived;
-        public event Action<bool> LightStateDataReceived;
+        public event Action<bool, long> LightStateDataReceived;
         public event Action<bool> ValveStateReceived;
 
         void Start() {
@@ -119,7 +119,8 @@ namespace Script.WifiConnection {
                             
                             else if (messageType == "light_state" && jsonObj.ContainsKey("light_state")){
                                 bool light_state = (bool)jsonObj["light_state"];
-                                LightStateDataReceived?.Invoke(light_state);
+                                long light_timer = (long)jsonObj["light_on_time"];
+                                LightStateDataReceived?.Invoke(light_state,light_timer);
                             } else if (messageType == "valve_state" && jsonObj.ContainsKey("valve_state")){
                                 bool valve_state = (bool)jsonObj["valve_state"];
                                 ValveStateReceived?.Invoke(valve_state);
