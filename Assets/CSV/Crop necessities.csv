@@ -1,0 +1,34 @@
+Crop Type,Growth Stage,Time minimun (days),Time maximum (days),Soil Type,Soil Humidity minimum (%),Soil Humidity maximum (%),Day Temperature minimum (°C),Day Temperature maximum (°C),Night Temperature minimum (°C),Night Temperature maximum (°C),Light Period minimum (hrs/day),Light Period maximum (hrs/day),Nitrogen minimum (mg/kg soil),Nitrogen maximum (mg/kg soil),Phosphorus minimum (mg/kg soil),Phosphorus maximum (mg/kg soil),Potassium minimum (mg/kg soil),Potassium maximum (mg/kg soil)
+Potato,Sprout Development,15,20,Loamy,70,78,18,27,12,18,8,10,50,125,95,170,120,305
+Potato,Sprout Development,15,20,Sandy,65,75,18,27,12,18,8,10,50,125,95,170,120,305
+Potato,Vegetative Growth,15,20,Loamy,80,90,18,27,12,18,8,10,50,125,95,170,120,305
+Potato,Vegetative Growth,15,20,Sandy,85,95,18,27,12,18,8,10,50,125,95,170,120,305
+Potato,Tuber Initiation,15,20,Loamy,80,90,18,27,12,18,8,10,50,125,95,170,120,305
+Potato,Tuber Initiation,15,20,Sandy,85,95,18,27,12,18,8,10,50,125,95,170,120,305
+Potato,Tuber Bulking,45,55,Loamy,80,90,18,27,12,18,8,10,50,125,95,170,120,305
+Potato,Tuber Bulking,45,55,Sandy,85,95,18,27,12,18,8,10,50,125,95,170,120,305
+Potato,Maturation,20,25,Loamy,60,70,18,27,12,18,8,10,50,125,95,170,120,305
+Potato,Maturation,20,25,Sandy,65,55,18,27,12,18,8,10,50,125,95,170,120,305
+Potato,Harvest,1,5,Loamy,65,65,18,27,12,18,8,10,50,125,95,170,120,305
+Potato,Harvest,1,5,Sandy,65,65,18,27,12,18,8,10,50,125,90,170,120,305
+Lettuce,Germination,5,10,Black Sandy Loam,70,75,15,20,15,18,14,16,205,210,310,315,280,285
+Lettuce,Seedling ,10,14,Black Sandy Loam,70,75,15,20,15,18,14,16,205,210,310,315,280,285
+Lettuce,Vegetative,25,50,Black Sandy Loam,70,75,15,20,15,18,10,12,205,210,310,315,280,285
+Lettuce,Maturation,10,40,Black Sandy Loam,70,75,15,20,15,18,10,12,205,210,310,315,280,285
+Lettuce,Harvest,1,5,Black Sandy Loam,70,75,15,20,15,18,10,12,205,210,310,315,280,285
+Carrot,Germination,14,21,Sandy Loam,70,75,15,18,13,15,6,8,50,60,100,120,100,120
+Carrot,Seedling ,14,30,Sandy Loam,70,75,15,18,13,15,6,8,50,60,100,120,100,120
+Carrot,Vegetative Growth,50,80,Sandy Loam,70,75,15,18,13,15,6,8,50,60,100,120,100,120
+Carrot,Harvest,1,5,Sandy Loam,70,75,15,18,13,15,6,8,50,60,100,120,100,120
+Tomato,Germination,5,10,Loamy,60,80,21,27,19,25,6,8,21,25,21,25,21,25
+Tomato,Seedling ,10,14,Loamy,60,80,18,21,16,19,14,16,25,30,15,20,40,45
+Tomato,Vegetative Growth,20,25,Loamy,60,80,21,27,19,25,6,8,35,40,21,25,46,60
+Tomato,Flowering and Fruit Set,20,30,Loamy,60,80,21,29,19,27,6,8,45,50,27,30,70,75
+Tomato,Fruit Development,20,30,Loamy,60,80,21,27,19,25,6,8,250,255,147,150,397,400
+Tomato,Harvest,1,5,Loamy,60,80,21,27,19,25,6,8,300,310,176,180,476,480
+Onion,Establishment,28,30,Sandy Loam,68,72,12,24,10,22,12,14,60,100,25,45,45,80
+Onion,Vegetative,28,30,Sandy Loam,68,72,12,24,10,22,12,14,60,100,25,45,45,80
+Onion,Bulb Initiation,28,30,Sandy Loam,68,72,25,27,23,25,12,14,60,100,25,45,45,80
+Onion,Bulb Development,42,45,Sandy Loam,68,72,21,27,19,25,12,14,60,100,25,45,45,80
+Onion,Maturation,10,15,Sandy Loam,68,72,21,27,19,25,12,14,60,100,25,45,45,80
+Onion,Harvest,1,5,Sandy Loam,68,72,21,27,19,25,12,14,60,100,25,45,45,80

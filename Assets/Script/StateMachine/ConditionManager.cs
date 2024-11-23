@@ -1,6 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using Script.StateMachine;
 using Script.WifiConnection;
 using UnityEngine;
 
@@ -8,13 +10,25 @@ public class ConditionManager : MonoBehaviour {
    [SerializeField] private Esp32SocketClient socketClient;
    private Animator animator;
    private float waterLevel;      // Current water level (update this based on your game logic)
-   private float thresholdTooMuchWater = 50.0f; // Threshold for StateA
-   private float thresholdNotEnoughWater = 70.0f; // Threshold for StateB
-   private float thresholdTooWarm = 50.0f; // Threshold for StateA
-   private float thresholdNotWarmEnough = 70.0f; // Threshold for StateB
-   private long lightTimer = 700; // Threshold for StateB
+   private float thresholdTooMuchWater = 0.0f; // Threshold for StateA
+   private float thresholdNotEnoughWater = 0.0f; // Threshold for StateB
+   private float thresholdTooWarm = 0.0f; // Threshold for StateA
+   private float thresholdNotWarmEnough = 0.0f; // Threshold for StateB
+   private long lightTimer = 0; // Threshold for StateB
+   [SerializeField] private CropsLoader cropsLoader;
+   private CSVConverter.Crop Crop;
+   private CSVConverter.Soil Soil;
+   private CSVConverter.GrowthStage growthStage;
+   private int currentStage = 0;
+   private float thresholdTooMuchNitrogen;
+   private float thresholdNotEnoughNitrogen;
+   private float thresholdTooMuchPhosphorous;
+   private float thresholdNotEnoughPhosphorous;
+   private float thresholdTooMuchPotassium;
+   private float thresholdNotEnoughPotassium;
 
-    void Start() {
+
+   void Start() {
         socketClient.OnTemperatureDataReceived += CheckTemperatureState;
         socketClient.OnHumidityDataReceived += CheckHumidityState;
         socketClient.LightStateDataReceived += CheckLightState;
@@ -68,25 +82,25 @@ public class ConditionManager : MonoBehaviour {
     
     
     private void CheckNitrogenState(float nitrogen){
-        if (nitrogen > thresholdTooMuchWater) {
+        if (nitrogen > thresholdTooMuchNitrogen) {
             TriggerState("HighNitrogen");
-        } else if (nitrogen < thresholdNotEnoughWater) {
+        } else if (nitrogen < thresholdNotEnoughNitrogen) {
             TriggerState("LowNitrogen");
         }
     }
     
     private void CheckPhosphorousState(float phosphorous){
-        if (phosphorous > thresholdTooMuchWater) {
+        if (phosphorous > thresholdTooMuchPhosphorous) {
             TriggerState("HighPhosphorous");
-        } else if (phosphorous < thresholdNotEnoughWater) {
+        } else if (phosphorous < thresholdNotEnoughPhosphorous) {
             TriggerState("LowPhosphorous");
         }
     }
     
     private void CheckPotassiumState(float potassium){
-        if (potassium > thresholdTooMuchWater) {
+        if (potassium > thresholdTooMuchPotassium) {
             TriggerState("HighPotassium");
-        } else if (potassium < thresholdNotEnoughWater) {
+        } else if (potassium < thresholdNotEnoughPotassium) {
             TriggerState("LowPotassium");
         }
     }
@@ -98,8 +112,7 @@ public class ConditionManager : MonoBehaviour {
         // Set the trigger for the desired state
         animator.SetTrigger(triggerName);
     }
-    private void ResetAllTriggers()
-    {
+    private void ResetAllTriggers() {
         // List all triggers used in your Animator
         animator.ResetTrigger("HighTemperature");
         animator.ResetTrigger("LowTemperature");
@@ -115,9 +128,28 @@ public class ConditionManager : MonoBehaviour {
         
         animator.ResetTrigger("HighPotassium");
         animator.ResetTrigger("LowPotassium");
+    }
+
+    public void StartMonotoring(){
+        Crop = cropsLoader.currentCrop;
+        Soil = Crop.Soils.First();
+        currentStage = 0;
+        growthStage = Soil.GrowthStages[currentStage];
+        thresholdNotEnoughWater = growthStage.Humidity.Min;
+        thresholdTooMuchWater = growthStage.Humidity.Max;
+        thresholdNotWarmEnough = growthStage.Temperature.Day.Min;
+        thresholdTooWarm = growthStage.Temperature.Day.Max; 
+        long averageHours = (growthStage.Light.Period.Max + growthStage.Light.Period.Min) / 2;
+        lightTimer = averageHours * 60 * 60;
+        thresholdTooMuchNitrogen = growthStage.Nutrients.Nitrogen.Max;
+        thresholdNotEnoughNitrogen = growthStage.Nutrients.Nitrogen.Min;
+        thresholdTooMuchPhosphorous = growthStage.Nutrients.Phosphorus.Max;
+        thresholdNotEnoughPhosphorous = growthStage.Nutrients.Phosphorus.Min;
+        thresholdTooMuchPotassium = growthStage.Nutrients.Potassium.Max;
+        thresholdNotEnoughPotassium = growthStage.Nutrients.Potassium.Min;
         
-        
-        
+        socketClient.SendMessageToEsp32("Lights Timer 0");
+        socketClient.SendMessageToEsp32("Lights ON 0");
         
     }
 
