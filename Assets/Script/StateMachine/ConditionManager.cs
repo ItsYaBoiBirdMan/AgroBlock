@@ -29,7 +29,7 @@ public class ConditionManager : MonoBehaviour {
 
 
    void Start() {
-        socketClient.OnTemperatureDataReceived += CheckTemperatureState;
+        socketClient.OnFullTemperatureDataReceived += CheckTemperatureState;
         socketClient.OnHumidityDataReceived += CheckHumidityState;
         socketClient.LightStateDataReceived += CheckLightState;
         socketClient.OnNitrogenDataReceived += CheckNitrogenState;
@@ -54,7 +54,15 @@ public class ConditionManager : MonoBehaviour {
         socketClient.SendMessageToEsp32("NPK esp 0");
     }
 
-    private void CheckTemperatureState(float temperature){
+    private void CheckTemperatureState(float temperature,long timer){
+        if (timer >= growthStage.Light.Period.Max * 60 * 60) {
+            thresholdNotWarmEnough = growthStage.Temperature.Night.Min; 
+            thresholdTooWarm = growthStage.Temperature.Night.Max;
+        } else {
+            thresholdNotWarmEnough = growthStage.Temperature.Day.Min; 
+            thresholdTooWarm = growthStage.Temperature.Day.Max;
+        }
+        
         if (temperature > thresholdTooWarm) {
             TriggerState("HighTemperature");
         } else if (temperature < thresholdNotWarmEnough) {
