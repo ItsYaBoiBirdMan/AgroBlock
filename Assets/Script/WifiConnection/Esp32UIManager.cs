@@ -29,8 +29,8 @@ namespace Script.WifiConnection {
             if(nitrogenText){nitrogenText.text = null; socketClient.OnNitrogenDataReceived += UpdateNitrogenUI;}
             if(phosphorousText){phosphorousText.text = null; socketClient.OnPhosphorousDataReceived += UpdatePhosphorousUI;}
             if(potassiumText){potassiumText.text = null; socketClient.OnPotassiumDataReceived += UpdatePotassiumUI;}
-            if(lightStateText){lightStateText.text = null; socketClient.LightStateDataReceived += UpdateLightStateUI;}
-            if(valveStateText){valveStateText.text = null; socketClient.ValveStateReceived += UpdateValveStateUI;}
+            if(lightStateText){lightStateText.text = "Lights: " + "Unknown"; socketClient.LightStateDataReceived += UpdateLightStateUI;}
+            if(valveStateText){valveStateText.text = "Valve: " + "Unknown"; socketClient.ValveStateReceived += UpdateValveStateUI;}
             if(lightStateButton){lightStateButton.onClick.AddListener(OnLightButtonClick);}
             if(valveStateButton){valveStateButton.onClick.AddListener(OnValveButtonClick);}
 
@@ -41,9 +41,9 @@ namespace Script.WifiConnection {
             } else {
                 Debug.Log("Not Connected");
             }
-            InvokeRepeating(nameof(SendMessagePeriodically), 0.5f, 0.5f);
-            InvokeRepeating(nameof(GetlightPeriodically), 2.0f, 2.0f);
-            InvokeRepeating(nameof(GetValvePeriodically), 2.0f, 2.0f);
+            InvokeRepeating(nameof(SendMessagePeriodically), 1f, 1.1f);
+            InvokeRepeating(nameof(GetlightPeriodically), 2.0f, 2.2f);
+            InvokeRepeating(nameof(GetValvePeriodically), 2.5f, 2.3f);
         }
         void SendMessagePeriodically() {
             if (socketClient.isConnected) {
@@ -84,11 +84,14 @@ namespace Script.WifiConnection {
         public void OnLightButtonClick(){
             lightState = !lightState;
             socketClient.SendMessageToEsp32(lightState ? "Lights ON 1" : "Lights OFF 0");
+            UpdateLightStateUI(lightState, 0);
+            
         }
 
         public void OnValveButtonClick(){
             valveState = !valveState;
             socketClient.SendMessageToEsp32(valveState ? "Valve ON 1" : "Valve OFF 0");
+            UpdateValveStateUI(valveState);
         }
 
         // Event handlers

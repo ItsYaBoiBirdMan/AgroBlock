@@ -97,14 +97,13 @@ namespace Script.WifiConnection {
                 // Send message to ESP32
                 byte[] messageBytes = Encoding.ASCII.GetBytes(message + "\n");
                 stream.Write(messageBytes, 0, messageBytes.Length);
-                Debug.Log("Sent to ESP32: " + message);
                 // Now read the response
                 try {
                     if (stream.DataAvailable) {
                         byte[] receivedBuffer = new byte[client.ReceiveBufferSize];
                         int bytesRead = stream.Read(receivedBuffer, 0, receivedBuffer.Length);
                         string messageReceived = Encoding.ASCII.GetString(receivedBuffer, 0, bytesRead);
-                        Debug.Log("Received from ESP32: " + messageReceived);
+                        
                         // Handle the JSON response based on its structure
                         jsonObj = JObject.Parse(messageReceived);
                         if (jsonObj.ContainsKey("message_type")) {
