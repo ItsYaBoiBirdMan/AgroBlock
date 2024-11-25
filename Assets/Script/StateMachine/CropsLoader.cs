@@ -11,10 +11,12 @@ namespace Script.StateMachine {
         internal List<CSVConverter.Crop> CropsWithSoilType { get; private set; }
         private string currentSoil;
         public CSVConverter.Crop currentCrop { get; private set; }
+        internal bool cropSelected { get; private set; }
+        internal bool cropsLoaded { get; private set; }
 
         // Start is called before the first frame update
         void Start() {
-            string inputFilePath = "Crop necessities.json"; // Ensure the correct JSON filename
+            string inputFilePath = "Crops.json"; // Ensure the correct JSON filename
             string jsonFilePath = Path.Combine(Application.dataPath, "JSON", inputFilePath);
 
             if (!File.Exists(jsonFilePath)) {
@@ -23,6 +25,7 @@ namespace Script.StateMachine {
             }
             try {
                 allCcrops = JsonConvert.DeserializeObject<List<CSVConverter.Crop>>(File.ReadAllText(jsonFilePath));
+                cropsLoaded = true;
                 Debug.Log($"Loaded {allCcrops.Count} crops from JSON.");
             } catch (Exception ex) {
                 Debug.LogError($"Failed to load crops: {ex.Message}");
@@ -48,7 +51,7 @@ namespace Script.StateMachine {
 
             CropsWithSoilType = matchingCrops;
             currentSoil = soilType;
-
+            Debug.Log("GOT HERE");
             return matchingCrops;
         }
 
@@ -73,6 +76,7 @@ namespace Script.StateMachine {
                 .ToList();
 
             currentCrop = matchingCrop;
+            cropSelected = true;
             Debug.Log($"Selected crop '{cropName}' with soil type '{currentSoil}'.");
             return currentCrop;
         }
