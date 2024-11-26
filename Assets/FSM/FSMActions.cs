@@ -1,64 +1,81 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class FSMActions : MonoBehaviour
 {
-    [SerializeField] private Animator FSM;
-
-    private void WaterStateHandler()
+    [SerializeField] private TextMeshProUGUI TestMessage;
+    private void HighHumidityMessage()
     {
-        switch (FSM.GetFloat("Water Level"))
-        {
-            case > 61:
-                 Debug.Log("Too much Water");
-                 //FSM.SetFloat("Water Level", 55);
-                 //Debug.Log("Water Level: " + FSM.GetFloat("Water Level"));
-                break;
-            case < 50:
-                Debug.Log("Low Water");
-                //FSM.SetFloat("Water Level", 55);
-                //Debug.Log("Water Level: " + FSM.GetFloat("Water Level"));
-                break;
-            default:
-                break;  
-        }
+        TestMessage.text = "Humidity is too High!!";
+        Debug.Log("Humidity is too High!!");
     }
-
-    private void TemperatureStateHandler()
+    private void LowHumidityMessage()
     {
-        switch (FSM.GetFloat("Temperature"))
-        {
-            case > 31:
-                Debug.Log("Temperature too high");
-                break;
-            case < 20:
-                Debug.Log("Temperature too low");
-                break;
-            default:
-                break;
-        }
+        TestMessage.text = "Humidity is too Low!!";
+        Debug.Log("Humidity is too Low!!");
     }
     
-    private void LightStateHandler()
+    private void HighTemperatureMessage()
     {
-        switch (FSM.GetFloat("Light Level"))
-        {
-            case > 91:
-                Debug.Log("Light too bright");
-                break;
-            case < 70:
-                Debug.Log("Light too dim");
-                break;
-            default:
-                break;
-        }
+        TestMessage.text = "Temperature is too High!!";
+        Debug.Log("Temperature is too High!!");
     }
-
-    private void Update()
+    
+    private void LowTemperatureMessage()
     {
-       
+        TestMessage.text = "Temperature is too Low!!";
+        Debug.Log("Temperature is too Low!!");
+    }
+    
+    private void TurningLightOnMessage()
+    {
+        TestMessage.text = "Light has been turned on.";
+        Debug.Log("Light has been turned on.");
+    }
+    
+    private void TurningLightOffMessage()
+    {
+        TestMessage.text = "Light has been turned off.";
+        Debug.Log("Light has been turned off.");
+    }
+    
+    private void HighNitrogenMessage()
+    {
+        TestMessage.text = "Nitrogen is too High!!";
+        Debug.Log("Nitrogen is too High!!");
+    }
+    
+    private void LowNitrogenMessage()
+    {
+        TestMessage.text = "Nitrogen is too Low!!";
+        Debug.Log("Nitrogen is too Low!!");
+    }
+    
+    private void HighPhosphorousMessage()
+    {
+        TestMessage.text = "Phosphorous is too High!!";
+        Debug.Log("Phosphorous is too High!!");
+    }
+    
+    private void LowPhosphorousMessage()
+    {
+        TestMessage.text = "Phosphorous is too Low!!";
+        Debug.Log("Phosphorous is too Low!!");
+    }
+    
+    private void HighPotassiumMessage()
+    {
+        TestMessage.text = "Potassium is too High!!";
+        Debug.Log("Potassium is too High!!");
+    }
+    
+    private void LowPotassiumMessage()
+    {
+        TestMessage.text = "Potassium is too Low!!";
+        Debug.Log("Potassium is too Low!!");
     }
 }
 
