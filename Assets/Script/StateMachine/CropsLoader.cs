@@ -21,7 +21,7 @@ namespace Script.StateMachine {
         // Start is called before the first frame update
         void Start() {
             string inputFilePath = "Crops.json"; // Ensure the correct JSON filename
-            string jsonFilePath = Path.Combine(Application.dataPath, "JSON", inputFilePath);
+            string jsonFilePath = Path.Combine(Application.streamingAssetsPath, "JSON", inputFilePath);
 
             if (!File.Exists(jsonFilePath)) {
                 Debug.LogError($"JSON file not found at path: {jsonFilePath}");

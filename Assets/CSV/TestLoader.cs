@@ -16,7 +16,7 @@ public class TestLoader : MonoBehaviour
         yield return new WaitForSecondsRealtime(10);
         Debug.Log("Show time");
         yield return new WaitForSecondsRealtime(2);
-        cropsLoader.GenerateTestValues();
+        //cropsLoader.GenerateTestValues();
         
         
     }

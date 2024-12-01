@@ -164,11 +164,20 @@ public class ConditionManager : MonoBehaviour {
     public void StartMonotoring(){
         Crop = cropsLoader.currentCrop;
         Soil = Crop.Soils.First();
-        string inputFilePath = "Crops.json"; // Ensure the correct JSON filename
-        string jsonFilePath = Path.Combine(Application.dataPath, "JSON", inputFilePath);
-        if (!File.Exists(jsonFilePath)) {
-            Debug.LogError($"JSON file not found at path: {jsonFilePath}");
-            return;
+        string inputFilePath = "CurrentStage.json"; // Ensure the correct JSON filename
+        string jsonFilePath = Path.Combine(Application.persistentDataPath, "JSON", inputFilePath);
+        
+        
+        
+        // Create the JSON file if it doesn't exist
+        if (!File.Exists(jsonFilePath)){
+            Debug.Log($"JSON file not found at path: {jsonFilePath}. Creating a new file with default content.");
+
+            // Default stage value (for example, 0)
+            currentStage = 0;
+
+            // Save the default value to the JSON file
+            SaveStageIntoFile(currentStage); 
         }
         try {
             currentStage = JsonConvert.DeserializeObject<int>(File.ReadAllText(jsonFilePath));
@@ -203,10 +212,9 @@ public class ConditionManager : MonoBehaviour {
 
     private void SaveStageIntoFile(int stage) {
         string json = JsonConvert.SerializeObject(stage, Formatting.Indented);
-        string folderPath = Path.Combine(Application.dataPath, "JSON");
+        string folderPath = Path.Combine(Application.persistentDataPath, "JSON");
         // Ensure the folder exists
-        if (!Directory.Exists(folderPath))
-        {
+        if (!Directory.Exists(folderPath)){
             Directory.CreateDirectory(folderPath);
         }
         // Define the full file path
