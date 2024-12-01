@@ -29,6 +29,7 @@ namespace Script.WifiConnection {
         public event Action<float> OnPotassiumDataReceived;
         public event Action<bool, long> LightStateDataReceived;
         public event Action<bool> ValveStateReceived;
+        public event Action<long> DayTimerReceived;
 
         void Start() {
             StartUDPDiscovery();
@@ -121,7 +122,9 @@ namespace Script.WifiConnection {
                             else if (messageType == "light_state" && jsonObj.ContainsKey("light_state")){
                                 bool light_state = (bool)jsonObj["light_state"];
                                 long light_timer = (long)jsonObj["light_on_time"];
+                                long days_timer = (long)jsonObj["persistant_days"];
                                 LightStateDataReceived?.Invoke(light_state,light_timer);
+                                DayTimerReceived?.Invoke(days_timer);
                             } else if (messageType == "valve_state" && jsonObj.ContainsKey("valve_state")){
                                 bool valve_state = (bool)jsonObj["valve_state"];
                                 ValveStateReceived?.Invoke(valve_state);
@@ -130,7 +133,9 @@ namespace Script.WifiConnection {
                             else if (messageType == "values" && jsonObj.ContainsKey("humidity")) {
                                 if (jsonObj.ContainsKey("temperature")) {
                                     float temperature = (float)jsonObj["temperature"];
+                                    long days_timer = (long)jsonObj["persistant_days"];
                                     OnTemperatureDataReceived?.Invoke(temperature);
+                                    DayTimerReceived?.Invoke(days_timer);
                                 }
                                 if (jsonObj.ContainsKey("humidity")) {
                                     float humidity = (float)jsonObj["humidity"];

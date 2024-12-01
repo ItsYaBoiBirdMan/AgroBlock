@@ -1,7 +1,9 @@
 
 using System;
 using System.Collections;
+using System.IO;
 using System.Linq;
+using Newtonsoft.Json;
 using Script.StateMachine;
 using Script.WifiConnection;
 using UnityEngine;
@@ -42,6 +44,7 @@ public class ConditionManager : MonoBehaviour {
        socketClient.OnNitrogenDataReceived += CheckNitrogenState;
        socketClient.OnPhosphorousDataReceived += CheckPhosphorousState;
        socketClient.OnPotassiumDataReceived += CheckPotassiumState;
+       socketClient.DayTimerReceived += CheckStageDayState;
        StartMonotoring();
        /*
        InvokeRepeating(nameof(GetTemperature), 2.0f, 180.0f);
@@ -140,6 +143,18 @@ public class ConditionManager : MonoBehaviour {
         }
     }
     
+    public void CheckStageDayState(long days){
+        if (growthStage.Time.Min > days/86.400) {
+            //fire event
+        }
+        else if (growthStage.Time.Max >= days/86.400) {
+            currentStage++;
+            if (Soil.GrowthStages.Count <= currentStage) {
+                currentStage = -1;
+            }
+            SaveStageIntoFile(currentStage);
+        }
+    }
     public void TriggerState(string triggerName){
       
         // Set the trigger for the desired state
@@ -149,7 +164,23 @@ public class ConditionManager : MonoBehaviour {
     public void StartMonotoring(){
         Crop = cropsLoader.currentCrop;
         Soil = Crop.Soils.First();
-        currentStage = 0;
+        string inputFilePath = "Crops.json"; // Ensure the correct JSON filename
+        string jsonFilePath = Path.Combine(Application.dataPath, "JSON", inputFilePath);
+        if (!File.Exists(jsonFilePath)) {
+            Debug.LogError($"JSON file not found at path: {jsonFilePath}");
+            return;
+        }
+        try {
+            currentStage = JsonConvert.DeserializeObject<int>(File.ReadAllText(jsonFilePath));
+            Debug.Log($"Loaded stage index:{currentStage}");
+            if (currentStage == -1) {
+                currentStage = 0;
+                SaveStageIntoFile(currentStage);
+            }
+        } catch (Exception ex) {
+            Debug.LogError($"Failed to load crops: {ex.Message}");
+        }
+        //TODO TRY TO LOAD CURRENT STAGE FROM JSON FILE IF -1 SET TO 0 OTHERWISE SET TO WHATS ON THE FILE
         growthStage = Soil.GrowthStages[currentStage];
         thresholdNotEnoughWater = growthStage.Humidity.Min;
         thresholdTooMuchWater = growthStage.Humidity.Max;
@@ -168,6 +199,20 @@ public class ConditionManager : MonoBehaviour {
         //socketClient.SendMessageToEsp32("Lights Timer 0");
         //socketClient.SendMessageToEsp32("Lights ON 0");
         
+    }
+
+    private void SaveStageIntoFile(int stage) {
+        string json = JsonConvert.SerializeObject(stage, Formatting.Indented);
+        string folderPath = Path.Combine(Application.dataPath, "JSON");
+        // Ensure the folder exists
+        if (!Directory.Exists(folderPath))
+        {
+            Directory.CreateDirectory(folderPath);
+        }
+        // Define the full file path
+        string filePath = Path.Combine(folderPath, "CurrentStage.json");
+        // Write the JSON to the file
+        File.WriteAllText(filePath, json);
     }
 /*
     private void Update()
