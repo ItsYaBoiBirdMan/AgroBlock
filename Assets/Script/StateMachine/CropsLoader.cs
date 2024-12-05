@@ -93,7 +93,7 @@ namespace Script.StateMachine {
            foreach (CSVConverter.Crop crop in allCcrops) {
                foreach (var soil in crop.Soils) {
                    foreach (var growthStage in soil.GrowthStages){
-                       for (int i = 0; i < 5000; i++) {
+                       for (int i = 0; i < 300; i++) {
                            int soilHumidityMin = Math.Min(growthStage.Humidity.Min, growthStage.Humidity.Max);
                            int soilHumidityMax = Math.Max(growthStage.Humidity.Min, growthStage.Humidity.Max);
                            if (soilHumidityMin > soilHumidityMax) {
@@ -170,7 +170,7 @@ namespace Script.StateMachine {
            }
 
            // Define the full file path
-           string filePath = Path.Combine(folderPath, "testCrops.json");
+           string filePath = Path.Combine(folderPath, "SampleCrops.json");
            
 
            // Write the JSON to the file
@@ -180,7 +180,7 @@ namespace Script.StateMachine {
            
             folderPath = Path.Combine(Application.dataPath, "CSV");
             // Define the full file path
-             filePath = Path.Combine(folderPath, "testCrops.csv");
+             filePath = Path.Combine(folderPath, "SampleCrops.csv");
              File.WriteAllText(filePath, csv);
            
             Debug.Log(" it is done ms");

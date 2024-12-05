@@ -114,8 +114,10 @@ public class ConditionManager : MonoBehaviour {
             TriggerState("TurnLightOff");
         } else if (!light && lightOnTime < lightTimer) {
             TriggerState("TurnLightOn");
-        } 
-        TriggerState("idle");
+        } else {
+            TriggerState("Idle");
+        }
+        
     }
     
     
@@ -145,7 +147,7 @@ public class ConditionManager : MonoBehaviour {
     
     public void CheckStageDayState(long days){
         if (growthStage.Time.Min > days/86.400) {
-            //fire event
+            //TODO fire event
         }
         else if (growthStage.Time.Max >= days/86.400) {
             currentStage++;
@@ -189,7 +191,6 @@ public class ConditionManager : MonoBehaviour {
         } catch (Exception ex) {
             Debug.LogError($"Failed to load crops: {ex.Message}");
         }
-        //TODO TRY TO LOAD CURRENT STAGE FROM JSON FILE IF -1 SET TO 0 OTHERWISE SET TO WHATS ON THE FILE
         growthStage = Soil.GrowthStages[currentStage];
         thresholdNotEnoughWater = growthStage.Humidity.Min;
         thresholdTooMuchWater = growthStage.Humidity.Max;
