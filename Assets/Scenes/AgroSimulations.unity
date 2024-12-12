@@ -572,7 +572,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Tutorials
+  m_text: AgroSimulations
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -661,7 +661,7 @@ GameObject:
   - component: {fileID: 368598681}
   - component: {fileID: 368598680}
   m_Layer: 5
-  m_Name: Tutorial Text
+  m_Name: AgroSimulation Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2466,7 +2466,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7746808328878733871, guid: 622c1ccf7a2c44447a4d1182d412902f, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7746808328878733871, guid: 622c1ccf7a2c44447a4d1182d412902f, type: 3}
       propertyPath: m_AnchorMin.x
@@ -2474,15 +2474,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7746808328878733871, guid: 622c1ccf7a2c44447a4d1182d412902f, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7746808328878733871, guid: 622c1ccf7a2c44447a4d1182d412902f, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 160
       objectReference: {fileID: 0}
     - target: {fileID: 7746808328878733871, guid: 622c1ccf7a2c44447a4d1182d412902f, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 70
       objectReference: {fileID: 0}
     - target: {fileID: 7746808328878733871, guid: 622c1ccf7a2c44447a4d1182d412902f, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2514,11 +2514,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7746808328878733871, guid: 622c1ccf7a2c44447a4d1182d412902f, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 7746808328878733871, guid: 622c1ccf7a2c44447a4d1182d412902f, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -55
       objectReference: {fileID: 0}
     - target: {fileID: 7746808328878733871, guid: 622c1ccf7a2c44447a4d1182d412902f, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
