@@ -14,6 +14,7 @@ public class StartScript : MonoBehaviour
     [SerializeField] private ConditionManager ConditionManager;
     [SerializeField] private GameObject StartMenu;
     [SerializeField] private GameObject SelectorMenu;
+    [SerializeField] private GameObject BackButton;
     [SerializeField] private Button StartButton;
     // Start is called before the first frame update
     public CSVConverter.Crop Crop{ private set; get; }
@@ -44,6 +45,7 @@ public class StartScript : MonoBehaviour
         } /*else*/ if (!hasCrop) {
             StartMenu.SetActive(false);
             SelectorMenu.SetActive(true);
+            BackButton.SetActive(false);
         } else {
             //TODO
         }

@@ -12,6 +12,9 @@ public class CropsDisplayer : MonoBehaviour {
     [SerializeField] private Transform contentPanel; // The Content object inside the ScrollView
     [SerializeField] private CropsLoader cropsLoader;
     [SerializeField] private Transform conditionsLoader;
+    [SerializeField] private Transform SelectorMenu;
+    [SerializeField] private Transform HomeMenu;
+    [SerializeField] private Transform Notifications;
     [SerializeField] private TMP_Dropdown dropdown;
     [SerializeField] private TextMeshProUGUI humidityText;
     [SerializeField] private TextMeshProUGUI temperatureText;
@@ -124,7 +127,12 @@ public class CropsDisplayer : MonoBehaviour {
         startScript.SavetimeIntoFile();
         ConditionManager.SaveStageIntoFile(0);
         ConditionManager.StartMonotoring(crop);
+        conditionsLoader.gameObject.SetActive(false);
+        SelectorMenu.gameObject.SetActive(false);
+        HomeMenu.gameObject.SetActive(true);
+        Notifications.gameObject.SetActive(true);
     }
+    
     private void OnDestroy(){
         // Make sure to remove the listener when the object is destroyed to avoid memory leaks
         dropdown.onValueChanged.RemoveListener(OnDropdownValueChanged);
