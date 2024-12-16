@@ -1675,6 +1675,53 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 5194751013497169861, guid: c4aeb1869bac96641846de64ca4a7fc9, type: 3}
   m_PrefabInstance: {fileID: 604349998484585991}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &619300104
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 619300106}
+  - component: {fileID: 619300105}
+  m_Layer: 0
+  m_Name: User Data
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &619300105
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 619300104}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0d0a6e95cd7eb04ab6a2938fce7c3cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  totalPoints: 0
+  currentPoints: 0
+  userName: Bianca
+--- !u!4 &619300106
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 619300104}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 960, y: 540, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &630024889 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7185311161943015058, guid: c4aeb1869bac96641846de64ca4a7fc9, type: 3}
@@ -2101,13 +2148,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Content: {fileID: 1026655551}
-  m_Horizontal: 1
+  m_Horizontal: 0
   m_Vertical: 1
   m_MovementType: 1
   m_Elasticity: 0.1
   m_Inertia: 1
   m_DecelerationRate: 0.135
-  m_ScrollSensitivity: 1
+  m_ScrollSensitivity: 10
   m_Viewport: {fileID: 2021096020}
   m_HorizontalScrollbar: {fileID: 0}
   m_VerticalScrollbar: {fileID: 0}
@@ -3029,7 +3076,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d77c26b727617fb4880604caed51518b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Entries:
+  EntryList:
   - {fileID: 1785407805}
   - {fileID: 630024889}
   - {fileID: 1183108280}
@@ -3039,15 +3086,16 @@ MonoBehaviour:
   - {fileID: 105739827}
   - {fileID: 976548979}
   - {fileID: 1172659313}
-  PsuedoUsers:
-  - {fileID: 833503944}
-  - {fileID: 513030403}
-  - {fileID: 2139131698}
-  - {fileID: 1474841939}
-  - {fileID: 345218330}
-  - {fileID: 737211068}
-  - {fileID: 1358037501}
+  UsersList:
+  - {fileID: 619300105}
   - {fileID: 1873345805}
+  - {fileID: 1358037501}
+  - {fileID: 737211068}
+  - {fileID: 345218330}
+  - {fileID: 1474841939}
+  - {fileID: 2139131698}
+  - {fileID: 513030403}
+  - {fileID: 833503944}
   userData: {fileID: 0}
 --- !u!4 &1127499829
 Transform:
@@ -5479,3 +5527,4 @@ SceneRoots:
   - {fileID: 2033186701}
   - {fileID: 966451269}
   - {fileID: 1127499829}
+  - {fileID: 619300106}
