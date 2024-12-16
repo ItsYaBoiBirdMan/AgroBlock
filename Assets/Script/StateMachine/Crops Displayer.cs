@@ -126,7 +126,9 @@ public class CropsDisplayer : MonoBehaviour {
         startScript.SaveCropIntoFile(crop);
         startScript.SavetimeIntoFile();
         ConditionManager.SaveStageIntoFile(0);
+        ConditionManager.SaveDayNightIntoFile(true);
         ConditionManager.StartMonotoring(crop);
+        startScript.updateBars();
         conditionsLoader.gameObject.SetActive(false);
         SelectorMenu.gameObject.SetActive(false);
         HomeMenu.gameObject.SetActive(true);

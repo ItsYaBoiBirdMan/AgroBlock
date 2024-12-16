@@ -9,6 +9,7 @@ using Random = UnityEngine.Random;
 namespace Script.StateMachine {
     public class ConditionManager : MonoBehaviour { 
         [SerializeField] private Esp32SocketClient socketClient;
+        [SerializeField] private StartScript startScript;
         [SerializeField] private Animator animator;
         private float waterLevel;      // Current water level (update this based on your game logic)
         private float thresholdTooMuchWater; // Threshold for StateA
@@ -85,11 +86,15 @@ namespace Script.StateMachine {
             //socketClient.SendMessageToEsp32("NPK esp 0");
         }
 
-        public void CheckTemperatureState(float temperature,long timer){
+        public void CheckTemperatureState(float temperature,long timer) {
             if (timer >= growthStage.Light.Period.Max * 60 * 60) {
+                SaveDayNightIntoFile(false);
+                startScript.updateBars();
                 thresholdNotWarmEnough = growthStage.Temperature.Night.Min; 
                 thresholdTooWarm = growthStage.Temperature.Night.Max;
             } else {
+                SaveDayNightIntoFile(true);
+                startScript.updateBars();
                 thresholdNotWarmEnough = growthStage.Temperature.Day.Min; 
                 thresholdTooWarm = growthStage.Temperature.Day.Max;
             }
@@ -221,6 +226,18 @@ namespace Script.StateMachine {
             }
             // Define the full file path
             string filePath = Path.Combine(folderPath, "CurrentStage.json");
+            // Write the JSON to the file
+            File.WriteAllText(filePath, json);
+        }
+        public void SaveDayNightIntoFile(bool day) {
+            string json = JsonConvert.SerializeObject(day, Formatting.Indented);
+            string folderPath = Path.Combine(Application.persistentDataPath, "JSON");
+            // Ensure the folder exists
+            if (!Directory.Exists(folderPath)){
+                Directory.CreateDirectory(folderPath);
+            }
+            // Define the full file path
+            string filePath = Path.Combine(folderPath, "CropDayNight.json");
             // Write the JSON to the file
             File.WriteAllText(filePath, json);
         }
