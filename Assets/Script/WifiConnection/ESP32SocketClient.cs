@@ -21,7 +21,6 @@ namespace Script.WifiConnection {
 
         // Specific events for different types of messages
         public event Action<float, long> OnFullTemperatureDataReceived;
-        public event Action<float> OnTemperatureDataReceived;
         public event Action<float> OnHumidityDataReceived;
         public event Action<float> OnLightDataReceived;
         public event Action<float> OnNitrogenDataReceived;
@@ -117,7 +116,6 @@ namespace Script.WifiConnection {
                                 float temperature = (float)jsonObj["temperature"];
                                 long light_timer = (long)jsonObj["light_on_time"];
                                 OnFullTemperatureDataReceived?.Invoke(temperature, light_timer);
-                                OnTemperatureDataReceived?.Invoke(temperature);
                             }
                             
                             else if (messageType == "light_state" && jsonObj.ContainsKey("light_state")){
@@ -135,7 +133,6 @@ namespace Script.WifiConnection {
                                 if (jsonObj.ContainsKey("temperature")) {
                                     float temperature = (float)jsonObj["temperature"];
                                     long days_timer = (long)jsonObj["persistant_days"];
-                                    OnTemperatureDataReceived?.Invoke(temperature);
                                     DayTimerReceived?.Invoke(days_timer);
                                 }
                                 if (jsonObj.ContainsKey("humidity")) {

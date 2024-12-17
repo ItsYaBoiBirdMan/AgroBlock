@@ -17,10 +17,14 @@ public class BarManager : MonoBehaviour
     [SerializeField] private Esp32SocketClient socketClient;
     [SerializeField] private Button refreshButton;
     [SerializeField] private Button lightButton;
+    [SerializeField] private GameObject TemperatureIcon;
+    [SerializeField] private StartScript StartScript;
     private float min;
     private float max;
     private bool firstTime = true;
     private bool lightOnOff;
+    private int cropStage;
+    private bool day;
     
 
     private void SetPercent(float value) {
@@ -32,6 +36,23 @@ public class BarManager : MonoBehaviour
         fill.fillAmount = Mathf.Clamp01(percentage);
         lightOnOff = lights;
         setLights(lightOnOff);
+    }
+    
+    private void SetPercentTemperature (float temperature , long dayNightTimer ) {
+        if (dayNightTimer < StartScript.Crop.Soils[0].GrowthStages[cropStage].Light.Period.Max*3600) {
+            min = StartScript.Crop.Soils[0].GrowthStages[cropStage].Temperature.Day.Min;
+            max = StartScript.Crop.Soils[0].GrowthStages[cropStage].Temperature.Day.Max;
+            day = true;
+        } else {
+            min = StartScript.Crop.Soils[0].GrowthStages[cropStage].Temperature.Night.Min;
+            max = StartScript.Crop.Soils[0].GrowthStages[cropStage].Temperature.Night.Max;
+            day = false;
+        }
+        SetMin(min);
+        SetMax(max);
+        float percentage = (temperature - min) / (max - min);
+        fill.fillAmount = Mathf.Clamp01(percentage);
+        setTemperatureIcon(day);
     }
 
     
@@ -78,10 +99,11 @@ public class BarManager : MonoBehaviour
     }
 
     public void StartBar(CSVConverter.Crop crop, int stage, bool day) {
+        cropStage = stage;
         switch (datatype) {
             case DataType.Temperature:
                 if (!firstTime){
-                    socketClient.OnTemperatureDataReceived += SetPercent;
+                    socketClient.OnFullTemperatureDataReceived += SetPercentTemperature;
                 }
                 if (day){
                     min = crop.Soils[0].GrowthStages[stage].Temperature.Day.Min;
@@ -176,6 +198,26 @@ public class BarManager : MonoBehaviour
         }
         
         Image itemiImage = lightButton.GetComponent<Image>();
+        if (itemiImage != null){
+            
+            string path = "Images/" + imageName;
+            Texture2D texture = Resources.Load<Texture2D>(path); // Assuming the image is in Resources/Images/image.png
+
+            if (texture != null){
+                // Apply the loaded texture to the UI Image component
+                itemiImage.sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f));
+            }
+        }
+    }
+    private void setTemperatureIcon(bool day) {
+        string imageName;
+        if (day){
+            imageName = "Temperature_Day"; // e.g., "item1_selector"
+        } else {
+            imageName = "Temperature_Night"; // e.g., "item1_selector"
+        }
+        
+        Image itemiImage = TemperatureIcon.GetComponent<Image>();
         if (itemiImage != null){
             
             string path = "Images/" + imageName;

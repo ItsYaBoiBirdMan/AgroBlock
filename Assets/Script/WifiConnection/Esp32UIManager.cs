@@ -23,7 +23,7 @@ namespace Script.WifiConnection {
 
         void Start() {
             // Subscribe to events
-            if(temperatureText){temperatureText.text = null; socketClient.OnTemperatureDataReceived += UpdateTemperatureUI;}
+            if(temperatureText){temperatureText.text = null; socketClient.OnFullTemperatureDataReceived += UpdateTemperatureUI;}
             if(humidityText){humidityText.text = null; socketClient.OnHumidityDataReceived += UpdateHumidityUI;}
             if(lightText){lightText.text = null; socketClient.OnLightDataReceived += UpdateLightUI;}
             if(nitrogenText){nitrogenText.text = null; socketClient.OnNitrogenDataReceived += UpdateNitrogenUI;}
@@ -95,7 +95,7 @@ namespace Script.WifiConnection {
         }
 
         // Event handlers
-        private void UpdateTemperatureUI(float temperature) {
+        private void UpdateTemperatureUI(float temperature, long timer) {
             temperatureText.text = "Temperature:" + temperature + "Cº";
         }
         
@@ -132,9 +132,9 @@ namespace Script.WifiConnection {
 
         void OnDestroy() {
             // Unsubscribe from events to avoid memory leaks
-            socketClient.OnTemperatureDataReceived -= UpdateLightUI;
+            socketClient.OnLightDataReceived -= UpdateLightUI;
             socketClient.OnHumidityDataReceived -= UpdateHumidityUI;
-            socketClient.OnLightDataReceived -= UpdateTemperatureUI;
+            socketClient.OnFullTemperatureDataReceived -= UpdateTemperatureUI;
         }
     }
 }

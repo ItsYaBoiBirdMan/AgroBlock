@@ -89,12 +89,10 @@ namespace Script.StateMachine {
         public void CheckTemperatureState(float temperature,long timer) {
             if (timer >= growthStage.Light.Period.Max * 60 * 60) {
                 SaveDayNightIntoFile(false);
-                startScript.updateBars();
                 thresholdNotWarmEnough = growthStage.Temperature.Night.Min; 
                 thresholdTooWarm = growthStage.Temperature.Night.Max;
             } else {
                 SaveDayNightIntoFile(true);
-                startScript.updateBars();
                 thresholdNotWarmEnough = growthStage.Temperature.Day.Min; 
                 thresholdTooWarm = growthStage.Temperature.Day.Max;
             }

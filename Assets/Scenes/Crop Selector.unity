@@ -1139,6 +1139,8 @@ MonoBehaviour:
   socketClient: {fileID: 1750647018}
   refreshButton: {fileID: 1780575688}
   lightButton: {fileID: 0}
+  TemperatureIcon: {fileID: 0}
+  StartScript: {fileID: 1750647017}
 --- !u!1 &107811012
 GameObject:
   m_ObjectHideFlags: 0
@@ -5144,6 +5146,8 @@ MonoBehaviour:
   socketClient: {fileID: 1750647018}
   refreshButton: {fileID: 153064344}
   lightButton: {fileID: 0}
+  TemperatureIcon: {fileID: 0}
+  StartScript: {fileID: 1750647017}
 --- !u!1 &529191823
 GameObject:
   m_ObjectHideFlags: 0
@@ -8673,7 +8677,7 @@ MonoBehaviour:
   m_Content: {fileID: 1028624800}
   m_Horizontal: 0
   m_Vertical: 1
-  m_MovementType: 0
+  m_MovementType: 1
   m_Elasticity: 0.1
   m_Inertia: 1
   m_DecelerationRate: 1
@@ -10483,6 +10487,8 @@ MonoBehaviour:
   socketClient: {fileID: 1750647018}
   refreshButton: {fileID: 1511399727}
   lightButton: {fileID: 0}
+  TemperatureIcon: {fileID: 1519607832}
+  StartScript: {fileID: 1750647017}
 --- !u!1 &1091437350
 GameObject:
   m_ObjectHideFlags: 0
@@ -11349,7 +11355,7 @@ MonoBehaviour:
   m_Content: {fileID: 654543543}
   m_Horizontal: 0
   m_Vertical: 1
-  m_MovementType: 0
+  m_MovementType: 1
   m_Elasticity: 0.1
   m_Inertia: 1
   m_DecelerationRate: 1
@@ -17418,8 +17424,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 399.99997, y: -225.07463}
-  m_SizeDelta: {x: 799.99994, y: 450.14926}
+  m_AnchoredPosition: {x: 400, y: -225.08038}
+  m_SizeDelta: {x: 800, y: 450.16077}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1647437705
 MonoBehaviour:
@@ -19507,6 +19513,8 @@ MonoBehaviour:
   socketClient: {fileID: 1750647018}
   refreshButton: {fileID: 1453657297}
   lightButton: {fileID: 0}
+  TemperatureIcon: {fileID: 0}
+  StartScript: {fileID: 1750647017}
 --- !u!1 &1866737763
 GameObject:
   m_ObjectHideFlags: 0
@@ -20699,6 +20707,8 @@ MonoBehaviour:
   socketClient: {fileID: 1750647018}
   refreshButton: {fileID: 401231460}
   lightButton: {fileID: 0}
+  TemperatureIcon: {fileID: 0}
+  StartScript: {fileID: 1750647017}
 --- !u!1 &1977294944
 GameObject:
   m_ObjectHideFlags: 0
@@ -21204,6 +21214,8 @@ MonoBehaviour:
   socketClient: {fileID: 1750647018}
   refreshButton: {fileID: 2120164262}
   lightButton: {fileID: 453347344}
+  TemperatureIcon: {fileID: 0}
+  StartScript: {fileID: 1750647017}
 --- !u!1 &2016260605
 GameObject:
   m_ObjectHideFlags: 0
