@@ -117,6 +117,7 @@ namespace Script.WifiConnection {
                                 float temperature = (float)jsonObj["temperature"];
                                 long light_timer = (long)jsonObj["light_on_time"];
                                 OnFullTemperatureDataReceived?.Invoke(temperature, light_timer);
+                                OnTemperatureDataReceived?.Invoke(temperature);
                             }
                             
                             else if (messageType == "light_state" && jsonObj.ContainsKey("light_state")){
