@@ -57,7 +57,7 @@ public class StartScript : MonoBehaviour
         } else {
             updateBars();
             StartMenu.SetActive(false);
-            HomeMenu.SetActive(false);
+            HomeMenu.SetActive(true);
             //TODO
         }
     }
