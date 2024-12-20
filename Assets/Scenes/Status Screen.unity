@@ -1449,10 +1449,10 @@ RectTransform:
   - {fileID: 1504321637}
   m_Father: {fileID: 1939956679}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 399.99997, y: -67.49999}
+  m_SizeDelta: {x: 799.99994, y: 44.999996}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &520615016
 MonoBehaviour:
@@ -1472,6 +1472,10 @@ MonoBehaviour:
   maxThreshold: {fileID: 434037657}
   datatype: 1
   socketClient: {fileID: 0}
+  refreshButton: {fileID: 0}
+  lightButton: {fileID: 0}
+  TemperatureIcon: {fileID: 0}
+  StartScript: {fileID: 0}
 --- !u!1 &533693110
 GameObject:
   m_ObjectHideFlags: 0
@@ -2836,10 +2840,10 @@ RectTransform:
   - {fileID: 1118432094}
   m_Father: {fileID: 1939956679}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 399.99997, y: -22.499998}
+  m_SizeDelta: {x: 799.99994, y: 44.999996}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &878133613
 MonoBehaviour:
@@ -2859,6 +2863,10 @@ MonoBehaviour:
   maxThreshold: {fileID: 1371320547}
   datatype: 0
   socketClient: {fileID: 0}
+  refreshButton: {fileID: 0}
+  lightButton: {fileID: 0}
+  TemperatureIcon: {fileID: 0}
+  StartScript: {fileID: 0}
 --- !u!1 &928195508
 GameObject:
   m_ObjectHideFlags: 0
@@ -3002,10 +3010,10 @@ RectTransform:
   - {fileID: 465759090}
   m_Father: {fileID: 1939956679}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 399.99997, y: -202.49998}
+  m_SizeDelta: {x: 799.99994, y: 44.999996}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &980454381
 MonoBehaviour:
@@ -3025,6 +3033,10 @@ MonoBehaviour:
   maxThreshold: {fileID: 1380776980}
   datatype: 4
   socketClient: {fileID: 0}
+  refreshButton: {fileID: 0}
+  lightButton: {fileID: 0}
+  TemperatureIcon: {fileID: 0}
+  StartScript: {fileID: 0}
 --- !u!1 &981707599
 GameObject:
   m_ObjectHideFlags: 0
@@ -5236,10 +5248,10 @@ RectTransform:
   - {fileID: 1349635950}
   m_Father: {fileID: 1939956679}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 399.99997, y: -157.49998}
+  m_SizeDelta: {x: 799.99994, y: 44.999996}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1576486376
 MonoBehaviour:
@@ -5259,6 +5271,10 @@ MonoBehaviour:
   maxThreshold: {fileID: 362336670}
   datatype: 3
   socketClient: {fileID: 0}
+  refreshButton: {fileID: 0}
+  lightButton: {fileID: 0}
+  TemperatureIcon: {fileID: 0}
+  StartScript: {fileID: 0}
 --- !u!1 &1582894153
 GameObject:
   m_ObjectHideFlags: 0
@@ -6042,10 +6058,10 @@ RectTransform:
   - {fileID: 1875489533}
   m_Father: {fileID: 1939956679}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 399.99997, y: -112.49999}
+  m_SizeDelta: {x: 799.99994, y: 44.999996}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1866899722
 MonoBehaviour:
@@ -6065,6 +6081,10 @@ MonoBehaviour:
   maxThreshold: {fileID: 1657810328}
   datatype: 2
   socketClient: {fileID: 0}
+  refreshButton: {fileID: 0}
+  lightButton: {fileID: 0}
+  TemperatureIcon: {fileID: 0}
+  StartScript: {fileID: 0}
 --- !u!1 &1872414871
 GameObject:
   m_ObjectHideFlags: 0
@@ -6357,10 +6377,10 @@ RectTransform:
   - {fileID: 1496044194}
   m_Father: {fileID: 1939956679}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 399.99997, y: -247.49998}
+  m_SizeDelta: {x: 799.99994, y: 44.999996}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1891839723
 MonoBehaviour:
@@ -6380,6 +6400,10 @@ MonoBehaviour:
   maxThreshold: {fileID: 621216696}
   datatype: 5
   socketClient: {fileID: 0}
+  refreshButton: {fileID: 0}
+  lightButton: {fileID: 0}
+  TemperatureIcon: {fileID: 0}
+  StartScript: {fileID: 0}
 --- !u!1 &1923299633
 GameObject:
   m_ObjectHideFlags: 0
