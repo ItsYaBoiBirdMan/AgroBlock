@@ -16,18 +16,32 @@ public class TaskController : MonoBehaviour
    private int _goal;
    [SerializeField] private int _progress;
    private int _pointReward;
+   [SerializeField]private float _totalTimeInSeconds;
+
+   private bool _timerStarted;
    
 
-   public void SetTaskInfo(string taskName, string taskDesc, string timeLeft, string diff, int goal, int reward)
+   public void SetTaskInfo(string taskName, string taskDesc, float totalTimeInSecs, string diff, int goal, int reward)
    {
       TaskName.text = "Name: " + taskName;
       TaskDesc.text = "Description: " + taskDesc;
-      TimeLeft.text = "Time Left: " + timeLeft;
       Difficulty.text = diff;
       _goal = goal;
       _pointReward = reward;
-
+      _totalTimeInSeconds = totalTimeInSecs;
       ProgressBar.maxValue = _goal;
+
+      _timerStarted = true;
+   }
+
+   private void UpdateTimer()
+   {
+      int hours = Mathf.FloorToInt(_totalTimeInSeconds / 3600);
+      int minutes = Mathf.FloorToInt((_totalTimeInSeconds % 3600) / 60);
+      int seconds = Mathf.FloorToInt(_totalTimeInSeconds % 60);
+      
+      string timerFormatted = $"{hours:D2}:{minutes:D2}:{seconds:D2}";
+      TimeLeft.text = "Time: " + timerFormatted;
    }
 
    public void AddProgressToTask()
@@ -41,8 +55,25 @@ public class TaskController : MonoBehaviour
       
       if (_progress >= _goal)
       {
-         EventManager.RemoveCompletedTaskEvent.Invoke(gameObject);
+         EventManager.RemoveTaskEvent.Invoke(gameObject);
       }
    }
-   
+
+   private void Update()
+   {
+      if (_timerStarted && _totalTimeInSeconds > 0)
+      {
+         _totalTimeInSeconds -= Time.deltaTime;
+         UpdateTimer();
+         
+         if (_totalTimeInSeconds <= 0)
+         {
+            _totalTimeInSeconds = 0;
+            _timerStarted = false;
+            Debug.Log("Timer done");
+            UpdateTimer();
+            EventManager.RemoveTaskEvent.Invoke(gameObject);
+         }
+      }
+   }
 }
