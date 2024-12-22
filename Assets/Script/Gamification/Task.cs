@@ -7,6 +7,7 @@ public class Task : ScriptableObject
 {
     [SerializeField] private string taskTitle;
     [SerializeField] private string taskDesc;
+    [SerializeField] private string taskDifficulty;
     [SerializeField] private int progressGoalValue;
     [SerializeField] private int progressCurrentValue;
     [SerializeField] private int pointsReward;
@@ -14,6 +15,9 @@ public class Task : ScriptableObject
     public string GetTitle()
     {
         return taskTitle;
+    }
+    public string GetTaskDifficulty() {
+        return taskDifficulty;
     }
 
     public string GetDesc()

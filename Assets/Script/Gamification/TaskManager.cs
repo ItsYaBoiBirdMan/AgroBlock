@@ -1,6 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
+using Newtonsoft.Json;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -12,6 +14,8 @@ public class TaskManager : MonoBehaviour
 
     [SerializeField] private UserDataManager userDataManager;
     
+    [SerializeField] private Transform completedTasksParent;
+    [SerializeField] private GameObject completedTaskPrefab;
     
     private void GetRandomTasks(List<Task> allTasksList, List<Task> currentTaskList, int count)
     {
@@ -36,9 +40,12 @@ public class TaskManager : MonoBehaviour
             if (currentTasks[i] == null) continue;
             if (currentTasks[i].CheckIfTaskIsComplete())
             {
+                Debug.LogError("Task completed");
                 EventManager.TaskCompletedEvent.Invoke(currentTasks[i]);
                 currentTasks[i].RestProgress();
                 completedTasks.Add(currentTasks[i]);
+                SaveCompletedTasksIntoFile(completedTasks);
+                DisplayCompletedTasks(completedTasks);
                 currentTasks[i] = null;
             }
         }
@@ -63,8 +70,20 @@ public class TaskManager : MonoBehaviour
 
     private void Awake()
     {
+        string inputFilePath = "CompletedTasks.json"; // Ensure the correct JSON filename
+        string jsonFilePath = Path.Combine(Application.persistentDataPath, "JSON", inputFilePath);
+        if (!File.Exists(jsonFilePath)){
+            completedTasks = new List<Task>();
+        } else {
+            try {
+                completedTasks = JsonConvert.DeserializeObject<List<Task>>(File.ReadAllText(jsonFilePath));
+                DisplayCompletedTasks(completedTasks);
+            } catch (Exception ex) {
+                Debug.LogError($"Failed to load crops: {ex.Message}");
+            } 
+        }
         currentTasks = new List<Task>();
-        completedTasks = new List<Task>();
+        
         for (int i = 0; i < allTasks.Count; i++)
         {
             allTasks[i].RestProgress();
@@ -90,5 +109,25 @@ public class TaskManager : MonoBehaviour
     private void OnDisable()
     {
         EventManager.TaskCompletedEvent.RemoveListener(AddPointsFromCompletedTask);
+    }
+
+    public void DisplayCompletedTasks(List<Task> tasks){
+        foreach (Task task in tasks){
+            var newTask = Instantiate(completedTaskPrefab, completedTasksParent);
+            newTask.GetComponent<CompletedTaskController>().SetTaskInfo(task.GetTitle(), task.GetTaskDifficulty());
+        }
+    }
+    
+    public void SaveCompletedTasksIntoFile(List<Task> tasks){
+        // The value inside is irrelevant
+        string json = JsonConvert.SerializeObject(tasks, Formatting.Indented);
+        string folderPath = Path.Combine(Application.persistentDataPath, "JSON");
+        // Ensure the folder exists
+        if (!Directory.Exists(folderPath)){
+            Directory.CreateDirectory(folderPath);
+        }
+        string filePath = Path.Combine(folderPath, "CompletedTasks.json");
+        // Write the JSON to the file
+        File.WriteAllText(filePath, json);
     }
 }
