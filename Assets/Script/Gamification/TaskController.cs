@@ -55,8 +55,16 @@ public class TaskController : MonoBehaviour
       
       if (_progress >= _goal)
       {
-         EventManager.RemoveTaskEvent.Invoke(gameObject);
+         EventManager.RemoveCompletedTaskEvent.Invoke(gameObject);
       }
+   }
+
+   public (string, string) GetInfoForCompletedTask()
+   {
+      string name = TaskName.text.Replace("Name: ", "");
+      string diff = Difficulty.text;
+
+      return (name, diff);
    }
 
    private void Update()
@@ -72,7 +80,7 @@ public class TaskController : MonoBehaviour
             _timerStarted = false;
             Debug.Log("Timer done");
             UpdateTimer();
-            EventManager.RemoveTaskEvent.Invoke(gameObject);
+            EventManager.RemoveTimeOutTaskEvent.Invoke(gameObject);
          }
       }
    }

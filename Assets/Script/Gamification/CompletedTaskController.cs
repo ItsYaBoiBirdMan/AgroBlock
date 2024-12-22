@@ -14,7 +14,7 @@ public class CompletedTaskController : MonoBehaviour
 
    public void SetTaskInfo(string taskName, string diff) {
       TaskName.text = "Name: " + taskName;
-      Difficulty.text = "Dificulty: " + diff;
+      Difficulty.text = "Difficulty: " + diff;
    }
 
 }

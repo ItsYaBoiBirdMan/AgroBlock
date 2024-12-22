@@ -33,7 +33,7 @@ public class TaskManager : MonoBehaviour
             tempList.RemoveAt(randomIndex);
         }
     }
-    private void CheckForCompletedTasks()
+    /*private void CheckForCompletedTasks()
     {
         for (int i = 0; i < currentTasks.Count; i++)
         {
@@ -49,7 +49,7 @@ public class TaskManager : MonoBehaviour
                 currentTasks[i] = null;
             }
         }
-    }
+    }*/
 
     private void AddPointsFromCompletedTask(Task task)
     {
@@ -77,7 +77,7 @@ public class TaskManager : MonoBehaviour
         } else {
             try {
                 completedTasks = JsonConvert.DeserializeObject<List<Task>>(File.ReadAllText(jsonFilePath));
-                DisplayCompletedTasks(completedTasks);
+                //DisplayCompletedTasks(completedTasks);
             } catch (Exception ex) {
                 Debug.LogError($"Failed to load crops: {ex.Message}");
             } 
@@ -93,7 +93,7 @@ public class TaskManager : MonoBehaviour
 
     private void Update()
     {
-        CheckForCompletedTasks();
+        //CheckForCompletedTasks();
     }
 
     public List<Task> GetCurrentTasks()
@@ -111,7 +111,7 @@ public class TaskManager : MonoBehaviour
         EventManager.TaskCompletedEvent.RemoveListener(AddPointsFromCompletedTask);
     }
 
-    public void DisplayCompletedTasks(List<Task> tasks){
+    /*public void DisplayCompletedTasks(List<Task> tasks){
         foreach (Task task in tasks){
             var newTask = Instantiate(completedTaskPrefab, completedTasksParent);
             newTask.GetComponent<CompletedTaskController>().SetTaskInfo(task.GetTitle(), task.GetTaskDifficulty());
@@ -129,5 +129,5 @@ public class TaskManager : MonoBehaviour
         string filePath = Path.Combine(folderPath, "CompletedTasks.json");
         // Write the JSON to the file
         File.WriteAllText(filePath, json);
-    }
+    }*/
 }
