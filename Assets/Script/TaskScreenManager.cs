@@ -1,9 +1,12 @@
 
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.IO;
+using UnityEngine.UIElements;
+using Button = UnityEngine.UI.Button;
 
 public class TaskScreenManager : MonoBehaviour
 {
@@ -11,8 +14,10 @@ public class TaskScreenManager : MonoBehaviour
     [SerializeField] private Transform CompletedTaskParent;
     [SerializeField] private List<GameObject> CurrentTasks;
     [SerializeField] private List<GameObject> CompletedTasks;
+    [SerializeField] private List<Task> completedTasks;
     [SerializeField] private GameObject TaskPrefab;
     [SerializeField] private GameObject CompletedTaskPrefab;
+    [SerializeField] private Button deleteButton;
 
 
     private void CreateNewTask(string taskName, string taskDesc, float totalTimeInSecs, string diff, int goal, int reward)
@@ -22,10 +27,22 @@ public class TaskScreenManager : MonoBehaviour
         CurrentTasks.Add(newTask);
     }
 
-    private void Start()
-    {
+    private void Start() {
+        string inputFilePath = "CompletedTasks.json"; // Ensure the correct JSON filename
+        string jsonFilePath = Path.Combine(Application.persistentDataPath, "JSON", inputFilePath);
+        if (!File.Exists(jsonFilePath)){
+            completedTasks = new List<Task>();
+        } else {
+            try {
+                completedTasks = JsonConvert.DeserializeObject<List<Task>>(File.ReadAllText(jsonFilePath));
+            } catch (Exception ex) {
+                Debug.LogError($"Failed to load crops: {ex.Message}");
+            } 
+        }
         CurrentTasks = new List<GameObject>();
         CompletedTasks = new List<GameObject>();
+        DisplayCompletedTasks(completedTasks);
+        deleteButton.onClick.AddListener(DeleteCompletedTasks);
     }
 
     public void TestTaskCreation()
@@ -33,11 +50,16 @@ public class TaskScreenManager : MonoBehaviour
         CreateNewTask("Test", "Test Desc", 10f, "Easy", 10, 1000);
     }
 
-    private void CreateCompletedTask(string taskName, string diff)
-    {
-        var completedTask = Instantiate(CompletedTaskPrefab, CompletedTaskParent);
-        completedTask.GetComponent<CompletedTaskController>().SetTaskInfo(taskName, diff);
-        CompletedTasks.Add(completedTask);
+    private void CreateCompletedTask(string taskName, string diff) {
+        var compTask = Instantiate(CompletedTaskPrefab, CompletedTaskParent);
+        compTask.GetComponent<CompletedTaskController>().SetTaskInfo(taskName, diff);
+        CompletedTasks.Add(compTask);
+        Task task = ScriptableObject.CreateInstance<Task>();
+        task.SetTitle(taskName);
+        task.SetTaskDifficulty(diff);
+        completedTasks.Add(task);
+        SaveCompletedTasksIntoFile(completedTasks);
+        DisplayCompletedTasks(completedTasks);
     }
 
     private void RemoveTaskOnCompletion(GameObject task)
@@ -54,16 +76,29 @@ public class TaskScreenManager : MonoBehaviour
     }
 
     public void SaveCompletedTasksIntoFile(List<Task> tasks){
-        // The value inside is irrelevant
         string json = JsonConvert.SerializeObject(tasks, Formatting.Indented);
         string folderPath = Path.Combine(Application.persistentDataPath, "JSON");
-        // Ensure the folder exists
         if (!Directory.Exists(folderPath)){
             Directory.CreateDirectory(folderPath);
         }
         string filePath = Path.Combine(folderPath, "CompletedTasks.json");
-        // Write the JSON to the file
         File.WriteAllText(filePath, json);
+    }
+    public void DisplayCompletedTasks(List<Task> tasks){
+        for (var i = CompletedTaskParent.transform.childCount - 1; i >= 0; i--) {
+            Destroy(CompletedTaskParent.transform.GetChild(i).gameObject);
+        }
+        foreach (Task task in tasks){
+            var newTask = Instantiate(CompletedTaskPrefab, CompletedTaskParent);
+            newTask.GetComponent<CompletedTaskController>().SetTaskInfo(task.GetTitle(), task.GetTaskDifficulty());
+            CompletedTasks.Add(newTask);
+        }
+    }
+
+    public void DeleteCompletedTasks() {
+        completedTasks = new List<Task>();
+        SaveCompletedTasksIntoFile(completedTasks);
+        DisplayCompletedTasks(completedTasks);
     }
     
     private void OnEnable()

@@ -5,19 +5,27 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Task Objects/Task")]
 public class Task : ScriptableObject
 {
-    [SerializeField] private string taskTitle;
+    [SerializeField] public string taskTitle;
     [SerializeField] private string taskDesc;
-    [SerializeField] private string taskDifficulty;
+    [SerializeField] public string taskDifficulty;
     [SerializeField] private int progressGoalValue;
     [SerializeField] private int progressCurrentValue;
     [SerializeField] private int pointsReward;
+    
 
     public string GetTitle()
     {
         return taskTitle;
     }
+    public void SetTitle(string taskname) {
+        taskTitle = taskname;
+    }
+
     public string GetTaskDifficulty() {
         return taskDifficulty;
+    }
+    public void SetTaskDifficulty(string difficulty) {
+        taskDifficulty = difficulty;
     }
 
     public string GetDesc()
@@ -54,4 +62,6 @@ public class Task : ScriptableObject
     {
         return progressCurrentValue == progressGoalValue;
     }
+    
+    
 }
