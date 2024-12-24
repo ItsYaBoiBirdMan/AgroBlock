@@ -10,11 +10,26 @@ public class CompletedTaskController : MonoBehaviour
    [SerializeField] private TextMeshProUGUI TaskName;
    [SerializeField] private TextMeshProUGUI Difficulty;
 
+   [SerializeField] private TextMeshProUGUI TaskDesc;
+   [SerializeField] private TextMeshProUGUI TimeLeft;
    
 
-   public void SetTaskInfo(string taskName, string diff) {
-      TaskName.text = "Name: " + taskName;
-      Difficulty.text = "Difficulty: " + diff;
+   private int _goal;
+   private int _pointReward;
+   private Task _task;
+
+   public void SetTaskInfo( Task task)
+   {
+      _task = task;
+      TaskName.text = "Name: " + task.GetTitle();
+      Difficulty.text = "Difficulty: " + task.GetTaskDifficulty();
+      _goal = task.GetProgressGoal();
+      _pointReward = task.GetPointsReward();
    }
+   public Task getTask() {
+      return _task;
+   }
+
+ 
 
 }

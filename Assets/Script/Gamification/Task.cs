@@ -6,11 +6,12 @@ using UnityEngine;
 public class Task : ScriptableObject
 {
     [SerializeField] public string taskTitle;
-    [SerializeField] private string taskDesc;
+    [SerializeField] public string taskDesc;
     [SerializeField] public string taskDifficulty;
-    [SerializeField] private int progressGoalValue;
-    [SerializeField] private int progressCurrentValue;
-    [SerializeField] private int pointsReward;
+    [SerializeField] public int progressGoalValue;
+    [SerializeField] public int progressCurrentValue;
+    [SerializeField] public int pointsReward;
+    [SerializeField] public float totalTime;
     
 
     public string GetTitle()
@@ -19,6 +20,14 @@ public class Task : ScriptableObject
     }
     public void SetTitle(string taskname) {
         taskTitle = taskname;
+    }
+    
+    public float GetTime()
+    {
+        return totalTime;
+    }
+    public void SetTime(float time) {
+        totalTime = time;
     }
 
     public string GetTaskDifficulty() {

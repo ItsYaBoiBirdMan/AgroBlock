@@ -14,6 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   taskTitle: Task 5
   taskDesc: Omg the "final" task :0
-  progressGoalValue: 100
+  taskDifficulty: Easy
+  progressGoalValue: 4
   progressCurrentValue: 0
   pointsReward: 500
+  totalTime: 100

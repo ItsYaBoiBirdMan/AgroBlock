@@ -14,6 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   taskTitle: Task 2
   taskDesc: Description of Task 2
+  taskDifficulty: difficult
   progressGoalValue: 1
   progressCurrentValue: 0
   pointsReward: 200
+  totalTime: 10

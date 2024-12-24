@@ -1777,8 +1777,14 @@ MonoBehaviour:
   TaskParent: {fileID: 629476916}
   CompletedTaskParent: {fileID: 559632918}
   CurrentTasks: []
+  activeTasks: []
   CompletedTasks: []
-  completedTasks: []
+  allTasks:
+  - {fileID: 11400000, guid: a88092b15419bd54d945b36df16ebe69, type: 2}
+  - {fileID: 11400000, guid: 69d4d5f42de238c409c7c7801c036fe0, type: 2}
+  - {fileID: 11400000, guid: a7e2c504dba753141b6b441dbf051bb5, type: 2}
+  - {fileID: 11400000, guid: aae521a44e2306e49be141f9f53452e7, type: 2}
+  - {fileID: 11400000, guid: 33c2266d2237d73449715002dd664d43, type: 2}
   TaskPrefab: {fileID: 7188782566308196392, guid: b94a90a268711db4696fd0de8b8a5e50, type: 3}
   CompletedTaskPrefab: {fileID: 8039303801402023516, guid: 6b18a9a4972efcc4a80e39d8f4426343, type: 3}
   deleteButton: {fileID: 682756843}

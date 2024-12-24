@@ -17,21 +17,27 @@ public class TaskController : MonoBehaviour
    [SerializeField] private int _progress;
    private int _pointReward;
    [SerializeField]private float _totalTimeInSeconds;
+   private Task _task;
 
    private bool _timerStarted;
    
 
-   public void SetTaskInfo(string taskName, string taskDesc, float totalTimeInSecs, string diff, int goal, int reward)
+   public void SetTaskInfo( Task task)
    {
-      TaskName.text = "Name: " + taskName;
-      TaskDesc.text = "Description: " + taskDesc;
-      Difficulty.text = diff;
-      _goal = goal;
-      _pointReward = reward;
-      _totalTimeInSeconds = totalTimeInSecs;
+      _task = task;
+      TaskName.text = "Name: " + task.GetTitle();
+      TaskDesc.text = "Description: " + task.GetDesc();
+      Difficulty.text = task.GetTaskDifficulty();
+      _goal = task.GetProgressGoal();
+      _pointReward = task.GetPointsReward();
+      _totalTimeInSeconds = task.GetTime();
       ProgressBar.maxValue = _goal;
 
       _timerStarted = true;
+   }
+
+   public Task getTask() {
+      return _task;
    }
 
    private void UpdateTimer()

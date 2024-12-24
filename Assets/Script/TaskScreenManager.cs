@@ -3,9 +3,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using Newtonsoft.Json;
-using System.Collections.Generic;
 using System.IO;
-using UnityEngine.UIElements;
 using Button = UnityEngine.UI.Button;
 
 public class TaskScreenManager : MonoBehaviour
@@ -13,18 +11,22 @@ public class TaskScreenManager : MonoBehaviour
     [SerializeField] private Transform TaskParent;
     [SerializeField] private Transform CompletedTaskParent;
     [SerializeField] private List<GameObject> CurrentTasks;
+    [SerializeField] private List<Task> activeTasks;
     [SerializeField] private List<GameObject> CompletedTasks;
-    [SerializeField] private List<Task> completedTasks;
+    private List<Task> completedTasks;
+    [SerializeField] private List<Task> allTasks;
+    
     [SerializeField] private GameObject TaskPrefab;
     [SerializeField] private GameObject CompletedTaskPrefab;
     [SerializeField] private Button deleteButton;
 
 
-    private void CreateNewTask(string taskName, string taskDesc, float totalTimeInSecs, string diff, int goal, int reward)
-    {
-        var newTask = Instantiate(TaskPrefab, TaskParent);
-        newTask.GetComponent<TaskController>().SetTaskInfo(taskName, taskDesc, totalTimeInSecs, diff, goal, reward);
-        CurrentTasks.Add(newTask);
+    private void CreateNewTask(List<Task> tasks) {
+        foreach (Task task in tasks) {
+            var newTask = Instantiate(TaskPrefab, TaskParent);
+            newTask.GetComponent<TaskController>().SetTaskInfo(task);
+            CurrentTasks.Add(newTask);
+        }
     }
 
     private void Start() {
@@ -42,30 +44,28 @@ public class TaskScreenManager : MonoBehaviour
         CurrentTasks = new List<GameObject>();
         CompletedTasks = new List<GameObject>();
         DisplayCompletedTasks(completedTasks);
+        RefreshCurrentTasks(false);
         deleteButton.onClick.AddListener(DeleteCompletedTasks);
     }
 
-    public void TestTaskCreation()
-    {
-        CreateNewTask("Test", "Test Desc", 10f, "Easy", 10, 1000);
-    }
 
-    private void CreateCompletedTask(string taskName, string diff) {
+
+    private void CreateCompletedTask(Task task) {
         var compTask = Instantiate(CompletedTaskPrefab, CompletedTaskParent);
-        compTask.GetComponent<CompletedTaskController>().SetTaskInfo(taskName, diff);
+        compTask.GetComponent<CompletedTaskController>().SetTaskInfo(task);
         CompletedTasks.Add(compTask);
-        Task task = ScriptableObject.CreateInstance<Task>();
-        task.SetTitle(taskName);
-        task.SetTaskDifficulty(diff);
         completedTasks.Add(task);
         SaveCompletedTasksIntoFile(completedTasks);
         DisplayCompletedTasks(completedTasks);
     }
 
-    private void RemoveTaskOnCompletion(GameObject task)
-    {
+    private void RemoveTaskOnCompletion(GameObject task) {
+        if (activeTasks.Contains(task.GetComponent<TaskController>().getTask())) {
+            activeTasks.Remove(task.GetComponent<TaskController>().getTask());
+        }
         CurrentTasks.Remove(task);
-        CreateCompletedTask(task.GetComponent<TaskController>().GetInfoForCompletedTask().Item1, task.GetComponent<TaskController>().GetInfoForCompletedTask().Item2);
+        //create completed task and add it to both lists
+        CreateCompletedTask(task.GetComponent<TaskController>().getTask());
         Destroy(task);
     }
 
@@ -90,7 +90,7 @@ public class TaskScreenManager : MonoBehaviour
         }
         foreach (Task task in tasks){
             var newTask = Instantiate(CompletedTaskPrefab, CompletedTaskParent);
-            newTask.GetComponent<CompletedTaskController>().SetTaskInfo(task.GetTitle(), task.GetTaskDifficulty());
+            newTask.GetComponent<CompletedTaskController>().SetTaskInfo(task);
             CompletedTasks.Add(newTask);
         }
     }
@@ -99,6 +99,35 @@ public class TaskScreenManager : MonoBehaviour
         completedTasks = new List<Task>();
         SaveCompletedTasksIntoFile(completedTasks);
         DisplayCompletedTasks(completedTasks);
+        RefreshCurrentTasks(true);
+    }
+
+    public void RefreshCurrentTasks(bool refreshAll) {
+        List<Task> temp = new List<Task>();
+        if (!refreshAll) {
+            foreach (Task task in allTasks) {
+                temp.Add(task);
+                Debug.Log("I got here");
+                if (completedTasks.Count== 0 ) {
+                    activeTasks.Add(task);
+                }
+                foreach (var completed in completedTasks) {
+                    if (completed.GetTitle().Equals(task.GetTitle())|| activeTasks.Contains(task)){
+                        temp.Remove(task);
+                    }
+                }
+            } 
+            activeTasks = temp;
+        } else {
+            foreach (Task task in allTasks){
+                if (!activeTasks.Contains(task)){
+                    activeTasks.Add(task);
+                    temp.Add(task);
+                }
+            }
+        }
+        CreateNewTask(temp);
+        
     }
     
     private void OnEnable()
