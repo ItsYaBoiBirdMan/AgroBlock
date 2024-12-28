@@ -10,6 +10,10 @@ public class TutorialsLoader : MonoBehaviour
     [SerializeField] private GameObject tutorialPrefab;
     [SerializeField] private List<Tutorial> tutorials;
     [SerializeField] private Transform contentHolder;
+    [SerializeField] private GameObject menu;
+    [SerializeField] private GameObject notification;
+    [SerializeField] private Transform uiPanel;
+
 
 
 
@@ -24,7 +28,7 @@ public class TutorialsLoader : MonoBehaviour
 
             var scriptableObjectHandler = clone.GetComponent<TutorialHandler>();
             if (scriptableObjectHandler != null){
-                scriptableObjectHandler.SetTutorial(tutorial);
+                scriptableObjectHandler.SetTutorial(tutorial, menu, notification,uiPanel);
             } else {
                 Debug.LogWarning("The prefab does not have a ScriptableObjectHandler component!");
             }

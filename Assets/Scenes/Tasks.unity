@@ -1627,6 +1627,9 @@ MonoBehaviour:
   - {fileID: 11400000, guid: b31d40a4e27d2fa42a7481b133efe4bf, type: 2}
   - {fileID: 11400000, guid: 45fc1510f24d58a4995e30cd51a0d3e0, type: 2}
   contentHolder: {fileID: 595357522}
+  menu: {fileID: 857152302}
+  notification: {fileID: 469001039}
+  uiPanel: {fileID: 1341086899}
 --- !u!1 &789700453
 GameObject:
   m_ObjectHideFlags: 0
@@ -2114,6 +2117,9 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 49a02648cd5ab664cb16583042e65948, type: 2}
   - {fileID: 11400000, guid: edf979d9299d530438a7d69766e79360, type: 2}
   contentHolder: {fileID: 595357522}
+  menu: {fileID: 1390898176}
+  notification: {fileID: 469001039}
+  uiPanel: {fileID: 1341086899}
 --- !u!1 &1200450617
 GameObject:
   m_ObjectHideFlags: 0

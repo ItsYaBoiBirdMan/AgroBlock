@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: HumTutorial
   m_EditorClassIdentifier: 
   tutorialName: Humidity
-  taskMenu: {fileID: 0}
+  taskMenu: {fileID: 816836367870673292, guid: 29b81bace64596c4aa3651719121a204, type: 3}
   pointsRewardAmount: 100

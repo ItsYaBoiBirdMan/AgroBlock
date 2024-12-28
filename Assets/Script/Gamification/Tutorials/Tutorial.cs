@@ -7,13 +7,13 @@ namespace Script.Gamification.Tutorials
     {
     
         [SerializeField] private string tutorialName;
-        [SerializeField] private GameObject taskMenu;
+        [SerializeField] private Transform taskMenu;
         [SerializeField] private int pointsRewardAmount;
     
         public string GetName(){
             return tutorialName;
         }
-        public GameObject GetMenu(){
+        public Transform GetMenu(){
             return taskMenu;
         }
         public int GetRewardAmount(){
