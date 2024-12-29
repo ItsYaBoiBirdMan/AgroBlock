@@ -63,15 +63,21 @@ public class TaskScreenManager : MonoBehaviour
         if (activeTasks.Contains(task.GetComponent<TaskController>().getTask())) {
             activeTasks.Remove(task.GetComponent<TaskController>().getTask());
         }
+        
         CurrentTasks.Remove(task);
         //create completed task and add it to both lists
         CreateCompletedTask(task.GetComponent<TaskController>().getTask());
+        GameObject phantomTask= task.GetComponent<TaskController>().getPhantomTask();
+        Destroy(phantomTask);
         Destroy(task);
+        
     }
 
     private void RemoveTaskOnTimeOut(GameObject task)
     {
         CurrentTasks.Remove(task);
+        GameObject phantomTask= task.GetComponent<TaskController>().getPhantomTask();
+        Destroy(phantomTask);
         Destroy(task);
     }
 

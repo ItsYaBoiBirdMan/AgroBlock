@@ -1137,7 +1137,7 @@ MonoBehaviour:
   Difficulty: {fileID: 25397624699384450}
   ProgressBar: {fileID: 7314714821433352508}
   _progress: 0
-  _totalTimeInSeconds: 0
+  phantomTask: {fileID: 5283510089700164225, guid: b99c24a3a7aedc944b8ab8f4c0b9c6ee, type: 3}
 --- !u!1 &7679841487500181878
 GameObject:
   m_ObjectHideFlags: 0

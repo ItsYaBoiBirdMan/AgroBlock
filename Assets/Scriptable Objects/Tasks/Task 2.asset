@@ -18,4 +18,4 @@ MonoBehaviour:
   progressGoalValue: 1
   progressCurrentValue: 0
   pointsReward: 200
-  totalTime: 10
+  totalTime: 20

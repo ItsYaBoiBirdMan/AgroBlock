@@ -16,11 +16,9 @@ public class TaskController : MonoBehaviour
    private int _goal;
    [SerializeField] private int _progress;
    private int _pointReward;
-   [SerializeField]private float _totalTimeInSeconds;
    private Task _task;
-
-   private bool _timerStarted;
-   
+   [SerializeField]private GameObject phantomTask;
+   private GameObject instantiatedPhantomTask;
 
    public void SetTaskInfo( Task task)
    {
@@ -30,25 +28,23 @@ public class TaskController : MonoBehaviour
       Difficulty.text = task.GetTaskDifficulty();
       _goal = task.GetProgressGoal();
       _pointReward = task.GetPointsReward();
-      _totalTimeInSeconds = task.GetTime();
       ProgressBar.maxValue = _goal;
+       instantiatedPhantomTask = Instantiate(phantomTask);
+      if (gameObject) {
+         Debug.Log(gameObject);
+         Debug.Log(TimeLeft);
+         instantiatedPhantomTask.GetComponent<PhantomTaskController>().startPhantomTask(gameObject, task.GetTime() , true, TimeLeft);
 
-      _timerStarted = true;
+      }
    }
 
+   public GameObject getPhantomTask() {
+      return instantiatedPhantomTask;
+   }
    public Task getTask() {
       return _task;
    }
-
-   private void UpdateTimer()
-   {
-      int hours = Mathf.FloorToInt(_totalTimeInSeconds / 3600);
-      int minutes = Mathf.FloorToInt((_totalTimeInSeconds % 3600) / 60);
-      int seconds = Mathf.FloorToInt(_totalTimeInSeconds % 60);
-      
-      string timerFormatted = $"{hours:D2}:{minutes:D2}:{seconds:D2}";
-      TimeLeft.text = "Time: " + timerFormatted;
-   }
+   
 
    public void AddProgressToTask()
    {
@@ -73,21 +69,5 @@ public class TaskController : MonoBehaviour
       return (name, diff);
    }
 
-   private void Update()
-   {
-      if (_timerStarted && _totalTimeInSeconds > 0)
-      {
-         _totalTimeInSeconds -= Time.deltaTime;
-         UpdateTimer();
-         
-         if (_totalTimeInSeconds <= 0)
-         {
-            _totalTimeInSeconds = 0;
-            _timerStarted = false;
-            Debug.Log("Timer done");
-            UpdateTimer();
-            EventManager.RemoveTimeOutTaskEvent.Invoke(gameObject);
-         }
-      }
-   }
+   
 }
