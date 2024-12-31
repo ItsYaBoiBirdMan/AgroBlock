@@ -8,13 +8,13 @@ public class InfoButtonManager : MonoBehaviour
     [SerializeField] private GameObject CropButtonWindow;
     [SerializeField] private GameObject SoilButtonWindow;
     [SerializeField] private GameObject GrowthStageButtonWindow;
+    [SerializeField] private StartScript startScript;
 
     public void ToggleCropWindow()
     {
-        if (!CropButtonWindow.activeInHierarchy)
-        {
+        if (!CropButtonWindow.activeInHierarchy) {
             CropButtonWindow.SetActive(true);
-            SetCropWindowText("Lettuce");
+            SetCropWindowText(startScript.Crop.Name);
         }
         else CropButtonWindow.SetActive(false);
     }
@@ -24,7 +24,7 @@ public class InfoButtonManager : MonoBehaviour
         if (!SoilButtonWindow.activeInHierarchy)
         {
             SoilButtonWindow.SetActive(true);
-            SetSoilWindowText("Sandy");
+            SetSoilWindowText(startScript.Crop.Soils[0].Type);
         }
         else SoilButtonWindow.SetActive(false);
     }
@@ -34,7 +34,8 @@ public class InfoButtonManager : MonoBehaviour
         if (!GrowthStageButtonWindow.activeInHierarchy)
         {
             GrowthStageButtonWindow.SetActive(true);
-            SetGrowthStageWindowText("Seed Stage");
+            int i = startScript.CurrentStage;
+            SetGrowthStageWindowText(startScript.Crop.Soils[0].GrowthStages[i].Stage);
         }
         else GrowthStageButtonWindow.SetActive(false);
     }
@@ -51,7 +52,7 @@ public class InfoButtonManager : MonoBehaviour
     
     private void SetGrowthStageWindowText(string growthStageName)
     {
-        GrowthStageButtonWindow.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = "The crop is in the " + growthStageName;
+        GrowthStageButtonWindow.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = "The crop is in the " + growthStageName + " stage";
     }
 
 }

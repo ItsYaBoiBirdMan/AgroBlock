@@ -24,7 +24,7 @@ public class StartScript : MonoBehaviour
     [SerializeField] private BarManager barManager5;
     [SerializeField] private BarManager barManager6;
 
-    private int currentStage;
+    internal int CurrentStage;
     // Start is called before the first frame update
     public CSVConverter.Crop Crop{ private set; get; }
     void Start() {
@@ -97,13 +97,13 @@ public class StartScript : MonoBehaviour
         if (!File.Exists(jsonFilePath)){
             Debug.Log($"JSON file not found at path: {jsonFilePath}. Creating a new file with default content.");
             // Default stage value (for example, 0)
-            currentStage = 0;
+            CurrentStage = 0;
         }
         try {
-            currentStage = JsonConvert.DeserializeObject<int>(File.ReadAllText(jsonFilePath));
-            Debug.Log($"Loaded stage index:{currentStage}");
-            if (currentStage == -1) {
-                currentStage = 0;
+            CurrentStage = JsonConvert.DeserializeObject<int>(File.ReadAllText(jsonFilePath));
+            Debug.Log($"Loaded stage index:{CurrentStage}");
+            if (CurrentStage == -1) {
+                CurrentStage = 0;
             }
         } catch (Exception ex) {
             Debug.LogError($"Failed to load crops: {ex.Message}");
@@ -123,12 +123,12 @@ public class StartScript : MonoBehaviour
             Debug.LogError($"Failed to load crops: {ex.Message}");
         }
         
-        barManager1.StartBar(Crop, currentStage, day);
-        barManager2.StartBar(Crop, currentStage, day);
-        barManager3.StartBar(Crop, currentStage, day);
-        barManager4.StartBar(Crop, currentStage, day);
-        barManager5.StartBar(Crop, currentStage, day);
-        barManager6.StartBar(Crop, currentStage, day);
+        barManager1.StartBar(Crop, CurrentStage, day);
+        barManager2.StartBar(Crop, CurrentStage, day);
+        barManager3.StartBar(Crop, CurrentStage, day);
+        barManager4.StartBar(Crop, CurrentStage, day);
+        barManager5.StartBar(Crop, CurrentStage, day);
+        barManager6.StartBar(Crop, CurrentStage, day);
         
     }
 }

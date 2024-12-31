@@ -527,6 +527,7 @@ MonoBehaviour:
   CropButtonWindow: {fileID: 1878324959}
   SoilButtonWindow: {fileID: 802553621}
   GrowthStageButtonWindow: {fileID: 161825907}
+  startScript: {fileID: 1750647017}
 --- !u!4 &47109934
 Transform:
   m_ObjectHideFlags: 0
