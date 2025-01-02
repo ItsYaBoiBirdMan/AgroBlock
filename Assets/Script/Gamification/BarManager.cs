@@ -87,7 +87,11 @@ public class BarManager : MonoBehaviour
     {
         CheckBarStatus();
     }
-    
+
+    public void SetFillAmountValue(float value)
+    {
+        fill.fillAmount = value;
+    }
     
     private enum DataType{
             Humidity,
