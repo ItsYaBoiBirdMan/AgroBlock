@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class StatusScreenTutorialManager : MonoBehaviour
 {
@@ -8,6 +9,8 @@ public class StatusScreenTutorialManager : MonoBehaviour
     [SerializeField] private BarManager bar1;
     [SerializeField] private BarManager bar2;
     [SerializeField] private BarManager lightBar;
+    [SerializeField] private Button NextButton;
+    [SerializeField] private Button LightButton;
 
     private int _index;
 
@@ -42,10 +45,21 @@ public class StatusScreenTutorialManager : MonoBehaviour
                 break;
             case 6:
                 lightBar.SetFillAmountValue(0.27f);
+                LightButton.interactable = true;
+                NextButton.interactable = false;
                 break;
             default:
                 break;
         }
         
+    }
+
+    public void LightButtonStep()
+    {
+        StepLists[_index].SetActive(false);
+        _index++;
+        StepLists[_index].SetActive(true);
+        NextButton.interactable = true;
+        LightButton.interactable = false;
     }
 }
