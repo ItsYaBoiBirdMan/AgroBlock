@@ -10,7 +10,7 @@ namespace Script.StateMachine {
     public class ConditionManager : MonoBehaviour { 
         [SerializeField] private Esp32SocketClient socketClient;
         [SerializeField] private StartScript startScript;
-        [SerializeField] private Animator animator;
+        //[SerializeField] private Animator animator;
         private float waterLevel;      // Current water level (update this based on your game logic)
         private float thresholdTooMuchWater; // Threshold for StateA
         private float thresholdNotEnoughWater; // Threshold for StateB
@@ -164,7 +164,7 @@ namespace Script.StateMachine {
         public void TriggerState(string triggerName){
       
             // Set the trigger for the desired state
-            animator.Play(triggerName);
+            //animator.Play(triggerName);
         }
     
         public void StartMonotoring(CSVConverter.Crop crop){
