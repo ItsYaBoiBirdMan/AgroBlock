@@ -10,4 +10,6 @@ public static class EventManager
 
    public static UnityEvent<GameObject> RemoveCompletedTaskEvent = new UnityEvent<GameObject>();
    public static UnityEvent<GameObject> RemoveTimeOutTaskEvent = new UnityEvent<GameObject>();
+
+   public static UnityEvent CloseTutorial = new UnityEvent();
 }

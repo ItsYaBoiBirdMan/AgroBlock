@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -11,6 +12,9 @@ public class StatusScreenTutorialManager : MonoBehaviour
     [SerializeField] private BarManager lightBar;
     [SerializeField] private Button NextButton;
     [SerializeField] private Button LightButton;
+    [SerializeField] private GameObject EntireTutorial;
+    [SerializeField] private UserDataManager User;
+    
 
     private int _index;
 
@@ -25,6 +29,9 @@ public class StatusScreenTutorialManager : MonoBehaviour
         else
         {
             Debug.Log("Tutorial Completed");
+            EventManager.CloseTutorial.Invoke();
+            User.AddPoints(1000);
+            Destroy(EntireTutorial);
         }
 
         switch (_index)
@@ -47,6 +54,9 @@ public class StatusScreenTutorialManager : MonoBehaviour
                 lightBar.SetFillAmountValue(0.27f);
                 LightButton.interactable = true;
                 NextButton.interactable = false;
+                break;
+            case 9:
+                NextButton.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "Close";
                 break;
             default:
                 break;

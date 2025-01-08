@@ -14,7 +14,6 @@ public class UserDataManager : MonoBehaviour
         totalPoints += points;
         currentPoints += points;
     }
-
     public int GetTotalPoints()
     {
         return totalPoints;

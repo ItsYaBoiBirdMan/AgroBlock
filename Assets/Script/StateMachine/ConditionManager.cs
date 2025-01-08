@@ -64,11 +64,11 @@ namespace Script.StateMachine {
         public void GetTemperature()
         {
             CheckTemperatureState(Random.Range(0, 30), 10);
-            //socketClient.SendMessageToEsp32("Temperature esp 0");
+            socketClient.SendMessageToEsp32("Temperature esp 0");
         }
         public void GetHumidity() {
             CheckHumidityState(Random.Range(0, 60));
-            //socketClient.SendMessageToEsp32("Humidity esp 0");
+            socketClient.SendMessageToEsp32("Humidity esp 0");
         }
         public void GetLight()
         {
@@ -77,13 +77,13 @@ namespace Script.StateMachine {
             if (test == 0) testbool = false;
             else testbool = true;
             CheckLightState( testbool, 10);
-            //socketClient.SendMessageToEsp32("Lights state 0");
+            socketClient.SendMessageToEsp32("Lights state 0");
         }
         public void GetFertilizer() {
             CheckNitrogenState(Random.Range(0, 50));
             CheckPotassiumState(Random.Range(0, 50));
             CheckPhosphorousState(Random.Range(0, 50));
-            //socketClient.SendMessageToEsp32("NPK esp 0");
+            socketClient.SendMessageToEsp32("NPK esp 0");
         }
 
         public void CheckTemperatureState(float temperature,long timer) {
@@ -98,26 +98,35 @@ namespace Script.StateMachine {
             }
         
             if (temperature > thresholdTooWarm) {
-                TriggerState("HighTemperature");
+                //TriggerState("HighTemperature");
+                EventManager.SendNotification.Invoke("Temperature too High");
             } else if (temperature < thresholdNotWarmEnough) {
-                TriggerState("LowTemperature");
+                //TriggerState("LowTemperature");
+                EventManager.SendNotification.Invoke("Temperature too Low");
             }
         }
     
         public void CheckHumidityState(float humidity){
             if (humidity > thresholdTooMuchWater) {
-                TriggerState("HighHumidity");
+                //TriggerState("HighHumidity");
+                EventManager.SendNotification.Invoke("Humidity Too High");
             } else if (humidity < thresholdNotEnoughWater) {
-                TriggerState("LowHumidity");
+                //TriggerState("LowHumidity");
+                socketClient.SendMessageToEsp32("Valve ON 0");
+                EventManager.SendNotification.Invoke("Humidity Too Low");
             }
         }
     
     
         public void CheckLightState(bool lights, long lightOnTime) {
             if (lights && lightOnTime >= lightTimer) {
-                TriggerState("TurnLightOff");
+                //TriggerState("TurnLightOff");
+                socketClient.SendMessageToEsp32("Lights OFF 0");
+                EventManager.SendNotification.Invoke("Turning Lights Off");
             } else if (!lights && lightOnTime < lightTimer) {
-                TriggerState("TurnLightOn");
+                //TriggerState("TurnLightOn");
+                socketClient.SendMessageToEsp32("Lights ON 0");
+                EventManager.SendNotification.Invoke("Turning Lights On");
             } else {
                 TriggerState("Idle");
             }
@@ -127,25 +136,31 @@ namespace Script.StateMachine {
     
         public void CheckNitrogenState(float nitrogen){
             if (nitrogen > thresholdTooMuchNitrogen) {
-                TriggerState("HighNitrogen");
+                //TriggerState("HighNitrogen");
+                EventManager.SendNotification.Invoke("Nitrogen too High");
             } else if (nitrogen < thresholdNotEnoughNitrogen) {
-                TriggerState("LowNitrogen");
+                //TriggerState("LowNitrogen");
+                EventManager.SendNotification.Invoke("Nitrogen too Low");
             }
         }
     
         public void CheckPhosphorousState(float phosphorous){
             if (phosphorous > thresholdTooMuchPhosphorous) {
-                TriggerState("HighPhosphorous");
+                //TriggerState("HighPhosphorous");
+                EventManager.SendNotification.Invoke("Phosphorous too High");
             } else if (phosphorous < thresholdNotEnoughPhosphorous) {
-                TriggerState("LowPhosphorous");
+                //TriggerState("LowPhosphorous");
+                EventManager.SendNotification.Invoke("Phosphorous too Low");
             }
         }
     
         public void CheckPotassiumState(float potassium){
             if (potassium > thresholdTooMuchPotassium) {
-                TriggerState("HighPotassium");
+                //TriggerState("HighPotassium");
+                EventManager.SendNotification.Invoke("Potassium too High");
             } else if (potassium < thresholdNotEnoughPotassium) {
-                TriggerState("LowPotassium");
+                //TriggerState("LowPotassium");
+                EventManager.SendNotification.Invoke("Potassium too Low");
             }
         }
     
@@ -172,6 +187,7 @@ namespace Script.StateMachine {
             Soil = Crop.Soils[0];
             string inputFilePath = "CurrentStage.json"; // Ensure the correct JSON filename
             string jsonFilePath = Path.Combine(Application.persistentDataPath, "JSON", inputFilePath);
+           
         
         
         
@@ -210,8 +226,10 @@ namespace Script.StateMachine {
             thresholdNotEnoughPotassium = growthStage.Nutrients.Potassium.Min;
             monotoringStarted = true;
 
-            //socketClient.SendMessageToEsp32("Lights Timer 0");
-            //socketClient.SendMessageToEsp32("Lights ON 0");
+            if (currentStage == 0) {
+                socketClient.SendMessageToEsp32("Lights Timer 0");
+            }
+            
 
         }
 
