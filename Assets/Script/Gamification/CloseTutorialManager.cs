@@ -5,13 +5,15 @@ using UnityEngine;
 
 public class CloseTutorialManager : MonoBehaviour
 {
-    [SerializeField] private GameObject TutorialMenu;
+    [SerializeField] private GameObject TutorialMenuHeader;
+    [SerializeField] private GameObject TutorialMenuBody;
     [SerializeField] private GameObject Notif;
 
 
     private void ResetWhenTutorialClose()
     {
-        TutorialMenu.SetActive(true);
+        TutorialMenuHeader.SetActive(true);
+        TutorialMenuBody.SetActive(true);
         Notif.SetActive(true);
     }
 

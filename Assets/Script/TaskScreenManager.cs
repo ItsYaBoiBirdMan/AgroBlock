@@ -19,6 +19,7 @@ public class TaskScreenManager : MonoBehaviour
     [SerializeField] private GameObject TaskPrefab;
     [SerializeField] private GameObject CompletedTaskPrefab;
     [SerializeField] private Button deleteButton;
+    [SerializeField] private UserDataManager User;
 
 
     private void CreateNewTask(List<Task> tasks) {
@@ -60,6 +61,8 @@ public class TaskScreenManager : MonoBehaviour
     }
 
     private void RemoveTaskOnCompletion(GameObject task) {
+        User.AddPoints(task.GetComponent<TaskController>().GetReward());
+        EventManager.SendNotification.Invoke("Task Completed: " + task.GetComponent<TaskController>().getTask().GetTitle());
         if (activeTasks.Contains(task.GetComponent<TaskController>().getTask())) {
             activeTasks.Remove(task.GetComponent<TaskController>().getTask());
         }
@@ -75,6 +78,7 @@ public class TaskScreenManager : MonoBehaviour
 
     private void RemoveTaskOnTimeOut(GameObject task)
     {
+        EventManager.SendNotification.Invoke("Task timed out: " + task.GetComponent<TaskController>().getTask().GetTitle());
         CurrentTasks.Remove(task);
         GameObject phantomTask= task.GetComponent<TaskController>().getPhantomTask();
         Destroy(phantomTask);

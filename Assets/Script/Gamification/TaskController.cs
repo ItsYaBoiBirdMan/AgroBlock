@@ -69,5 +69,9 @@ public class TaskController : MonoBehaviour
       return (name, diff);
    }
 
+   public int GetReward()
+   {
+      return _pointReward;
+   }
    
 }

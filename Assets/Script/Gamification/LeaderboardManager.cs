@@ -9,7 +9,7 @@ public class LeaderboardManager : MonoBehaviour
 {
     [SerializeField] private List<GameObject> EntryList;
     [SerializeField] private List<UserDataManager> UsersList;
-    [SerializeField] private UserDataManager userData;
+    //[SerializeField] private UserDataManager userData;
     
     private void SetLeaderboardEntry(GameObject entry ,int pos, string name, int points)
     {
@@ -18,7 +18,7 @@ public class LeaderboardManager : MonoBehaviour
         entry.transform.GetChild(2).GetChild(0).GetComponent<TextMeshProUGUI>().text = points.ToString();
     }
 
-    private void SortLeaderboard()
+    public void SortLeaderboard()
     {
         UsersList = UsersList.OrderByDescending(obj => obj.GetTotalPoints()).ToList();
         for (int i = 0; i < 9; i++)

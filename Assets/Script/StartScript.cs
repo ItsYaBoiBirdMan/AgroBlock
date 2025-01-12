@@ -35,7 +35,7 @@ public class StartScript : MonoBehaviour
         } else {
             try {
                 Crop = JsonConvert.DeserializeObject<CSVConverter.Crop>(File.ReadAllText(jsonFilePath));
-                ConditionManager.StartMonotoring(Crop);
+  //              ConditionManager.StartMonotoring(Crop);
                 hasCrop = true;
             } catch (Exception ex) {
                 Debug.LogError($"Failed to load crops: {ex.Message}");
