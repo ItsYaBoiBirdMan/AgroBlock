@@ -10,7 +10,6 @@ namespace Script.StateMachine {
     public class ConditionManager : MonoBehaviour { 
         [SerializeField] private Esp32SocketClient socketClient;
         [SerializeField] private StartScript startScript;
-        [SerializeField] private Animator animator;
         private float waterLevel;      // Current water level (update this based on your game logic)
         private float thresholdTooMuchWater; // Threshold for StateA
         private float thresholdNotEnoughWater; // Threshold for StateB
@@ -31,6 +30,12 @@ namespace Script.StateMachine {
         private float thresholdNotEnoughPotassium;
         private bool monotoringStarted;
 
+        public float Temperature;
+        public float Humidity;
+        public float Nitrogen;
+        public float Phosphorous;
+        public float Potassium;
+        public long lighthours = 8;
 
         void Start() {
             StartCoroutine(Waiter());
@@ -61,32 +66,27 @@ namespace Script.StateMachine {
         
         }
 
-        public void GetTemperature()
-        {
-            CheckTemperatureState(Random.Range(0, 30), 10);
+        public void GetTemperature(){
+      
+            
             socketClient.SendMessageToEsp32("Temperature esp 0");
         }
         public void GetHumidity() {
-            CheckHumidityState(Random.Range(0, 60));
+            
             socketClient.SendMessageToEsp32("Humidity esp 0");
         }
         public void GetLight()
         {
-            int test = Random.Range(0, 1);
-            bool testbool;
-            if (test == 0) testbool = false;
-            else testbool = true;
-            CheckLightState( testbool, 10);
+            
             socketClient.SendMessageToEsp32("Lights state 0");
         }
         public void GetFertilizer() {
-            CheckNitrogenState(Random.Range(0, 50));
-            CheckPotassiumState(Random.Range(0, 50));
-            CheckPhosphorousState(Random.Range(0, 50));
+            
             socketClient.SendMessageToEsp32("NPK esp 0");
         }
 
         public void CheckTemperatureState(float temperature,long timer) {
+            Temperature= temperature;
             if (timer >= growthStage.Light.Period.Max * 60 * 60) {
                 SaveDayNightIntoFile(false);
                 thresholdNotWarmEnough = growthStage.Temperature.Night.Min; 
@@ -98,20 +98,19 @@ namespace Script.StateMachine {
             }
         
             if (temperature > thresholdTooWarm) {
-                //TriggerState("HighTemperature");
                 EventManager.SendNotification.Invoke("Temperature too High");
             } else if (temperature < thresholdNotWarmEnough) {
-                //TriggerState("LowTemperature");
                 EventManager.SendNotification.Invoke("Temperature too Low");
             }
         }
     
         public void CheckHumidityState(float humidity){
+            Humidity = humidity;
             if (humidity > thresholdTooMuchWater) {
-                //TriggerState("HighHumidity");
+
                 EventManager.SendNotification.Invoke("Humidity Too High");
             } else if (humidity < thresholdNotEnoughWater) {
-                //TriggerState("LowHumidity");
+
                 socketClient.SendMessageToEsp32("Valve ON 0");
                 EventManager.SendNotification.Invoke("Humidity Too Low");
             }
@@ -120,53 +119,47 @@ namespace Script.StateMachine {
     
         public void CheckLightState(bool lights, long lightOnTime) {
             if (lights && lightOnTime >= lightTimer) {
-                //TriggerState("TurnLightOff");
                 socketClient.SendMessageToEsp32("Lights OFF 0");
                 EventManager.SendNotification.Invoke("Turning Lights Off");
             } else if (!lights && lightOnTime < lightTimer) {
-                //TriggerState("TurnLightOn");
                 socketClient.SendMessageToEsp32("Lights ON 0");
                 EventManager.SendNotification.Invoke("Turning Lights On");
             } else {
-                TriggerState("Idle");
             }
         
         }
     
     
         public void CheckNitrogenState(float nitrogen){
+            Nitrogen = nitrogen;
             if (nitrogen > thresholdTooMuchNitrogen) {
-                //TriggerState("HighNitrogen");
                 EventManager.SendNotification.Invoke("Nitrogen too High");
             } else if (nitrogen < thresholdNotEnoughNitrogen) {
-                //TriggerState("LowNitrogen");
                 EventManager.SendNotification.Invoke("Nitrogen too Low");
             }
         }
     
         public void CheckPhosphorousState(float phosphorous){
+            Phosphorous = phosphorous;
             if (phosphorous > thresholdTooMuchPhosphorous) {
-                //TriggerState("HighPhosphorous");
                 EventManager.SendNotification.Invoke("Phosphorous too High");
             } else if (phosphorous < thresholdNotEnoughPhosphorous) {
-                //TriggerState("LowPhosphorous");
                 EventManager.SendNotification.Invoke("Phosphorous too Low");
             }
         }
     
         public void CheckPotassiumState(float potassium){
+            Potassium = potassium;
             if (potassium > thresholdTooMuchPotassium) {
-                //TriggerState("HighPotassium");
                 EventManager.SendNotification.Invoke("Potassium too High");
             } else if (potassium < thresholdNotEnoughPotassium) {
-                //TriggerState("LowPotassium");
                 EventManager.SendNotification.Invoke("Potassium too Low");
             }
         }
     
         public void CheckStageDayState(long days){
             if (growthStage.Time.Min > days/86.400) {
-                //TODO fire event
+                EventManager.SendNotification.Invoke("possible stage change");
             }
             else if (growthStage.Time.Max >= days/86.400) {
                 currentStage++;
@@ -176,12 +169,17 @@ namespace Script.StateMachine {
                 SaveStageIntoFile(currentStage);
             }
         }
-        public void TriggerState(string triggerName){
-      
-            // Set the trigger for the desired state
-            animator.Play(triggerName);
+        public void AddStage(){
+                currentStage++;
+            Debug.Log("New Stage: " + currentStage);
+                if (Soil.GrowthStages.Count <= currentStage){
+                    currentStage = -1;
+                }
+                SaveStageIntoFile(currentStage);
+            
         }
-    
+
+
         public void StartMonotoring(CSVConverter.Crop crop){
             Crop = crop;
             Soil = Crop.Soils[0];

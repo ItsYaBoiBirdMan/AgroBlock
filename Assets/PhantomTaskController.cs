@@ -29,7 +29,6 @@ public class PhantomTaskController : MonoBehaviour
                 if (_totalTimeInSeconds <= 0) {
                     _totalTimeInSeconds = 0;
                     _timerStarted = false;
-                    Debug.Log("Timer done");
                     UpdateTimer();
                     EventManager.RemoveTimeOutTaskEvent.Invoke(task);
                 }

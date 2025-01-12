@@ -13,6 +13,7 @@ public class BarManager : MonoBehaviour
     [SerializeField] private Image background;
     [SerializeField] private TextMeshProUGUI minThreshold;
     [SerializeField] private TextMeshProUGUI maxThreshold;
+    [SerializeField] private TextMeshProUGUI refreshText;
     [SerializeField] private DataType datatype;
     [SerializeField] private Esp32SocketClient socketClient;
     [SerializeField] private Button refreshButton;
@@ -28,10 +29,12 @@ public class BarManager : MonoBehaviour
     
 
     private void SetPercent(float value) {
+        Debug.Log("Value: " + value) ;
         float percentage = (value - min) / (max - min);
         fill.fillAmount = Mathf.Clamp01(percentage);
     }
     private void SetPercentLights (bool lights , long value ) {
+        Debug.Log("Lights: " + lights + " value: " + value) ;
         float percentage = (value - min) / (max - min);
         fill.fillAmount = Mathf.Clamp01(percentage);
         lightOnOff = lights;
@@ -39,6 +42,7 @@ public class BarManager : MonoBehaviour
     }
     
     private void SetPercentTemperature (float temperature , long dayNightTimer ) {
+        Debug.Log("temperature: " + temperature) ;
         if (dayNightTimer < StartScript.Crop.Soils[0].GrowthStages[cropStage].Light.Period.Max*3600) {
             min = StartScript.Crop.Soils[0].GrowthStages[cropStage].Temperature.Day.Min;
             max = StartScript.Crop.Soils[0].GrowthStages[cropStage].Temperature.Day.Max;
@@ -108,6 +112,7 @@ public class BarManager : MonoBehaviour
             case DataType.Temperature:
                 if (!firstTime){
                     socketClient.OnFullTemperatureDataReceived += SetPercentTemperature;
+                    socketClient.OnFullTemperatureDataReceived += setRefreshText3;
                 }
                 if (day){
                     min = crop.Soils[0].GrowthStages[stage].Temperature.Day.Min;
@@ -120,6 +125,7 @@ public class BarManager : MonoBehaviour
             case DataType.Humidity:
                 if (!firstTime){
                     socketClient.OnHumidityDataReceived += SetPercent;
+                    socketClient.OnHumidityDataReceived += setRefreshText;
                 }
                 min = crop.Soils[0].GrowthStages[stage].Humidity.Min;
                 max = crop.Soils[0].GrowthStages[stage].Humidity.Max;
@@ -127,6 +133,7 @@ public class BarManager : MonoBehaviour
             case DataType.Light:
                 if (!firstTime){
                     socketClient.LightStateDataReceived += SetPercentLights;
+                    socketClient.LightStateDataReceived += setRefreshText2;
                     lightButton.onClick.AddListener(ToggleLights);
                 }
                 min = crop.Soils[0].GrowthStages[stage].Light.Period.Min;
@@ -135,6 +142,7 @@ public class BarManager : MonoBehaviour
             case DataType.Nitrogen:
                 if (!firstTime){
                     socketClient.OnNitrogenDataReceived += SetPercent;
+                    socketClient.OnNitrogenDataReceived += setRefreshText;
                 }
                 min = crop.Soils[0].GrowthStages[stage].Nutrients.Nitrogen.Min;
                 max = crop.Soils[0].GrowthStages[stage].Nutrients.Nitrogen.Max;
@@ -142,6 +150,7 @@ public class BarManager : MonoBehaviour
             case DataType.Phosphorus:
                 if (!firstTime){
                     socketClient.OnPhosphorousDataReceived += SetPercent;
+                    socketClient.OnPhosphorousDataReceived += setRefreshText;
                 }
                 min = crop.Soils[0].GrowthStages[stage].Nutrients.Phosphorus.Min;
                 max = crop.Soils[0].GrowthStages[stage].Nutrients.Phosphorus.Max;
@@ -149,6 +158,7 @@ public class BarManager : MonoBehaviour
             case DataType.Potassium:
                 if (!firstTime){
                     socketClient.OnPotassiumDataReceived += SetPercent;
+                    socketClient.OnPotassiumDataReceived += setRefreshText;
                 }
                 min = crop.Soils[0].GrowthStages[stage].Nutrients.Potassium.Min;
                 max = crop.Soils[0].GrowthStages[stage].Nutrients.Potassium.Max;
@@ -170,8 +180,21 @@ public class BarManager : MonoBehaviour
             socketClient.SendMessageToEsp32("Lights OFF 0");
         }
     }
-
+    private void setRefreshText(float value){
+        DateTime now = DateTime.Now;
+        refreshText.text = "Last Checked: " + now.ToString("HH:mm") + ".";
+    }
+    private void setRefreshText2(bool value, long value2){
+        DateTime now = DateTime.Now;
+        refreshText.text = "Last Checked: " + now.ToString("HH:mm") + ".";
+    }
+    private void setRefreshText3(float value, long value2)
+    {
+        DateTime now = DateTime.Now;
+        refreshText.text = "Last Checked: " + now.ToString("HH:mm") + ".";
+    }
     private void RefreshInfo() {
+        Debug.Log("PRessed");
         switch (datatype){
          case DataType.Temperature:
              socketClient.SendMessageToEsp32("Temperature esp 0");

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
+using Script.StateMachine;
 
 public class DecisionTreeClient : MonoBehaviour
 {
@@ -9,9 +10,18 @@ public class DecisionTreeClient : MonoBehaviour
     private string apiUrl = "http://127.0.0.1:5000/predictDecisionTree";
     private string apiUrl2 = "http://127.0.0.1:5000/predictFertilezerlessTree";
     // Example features to send to the API
-    [SerializeField]
     private float[] features = { 72.0f, 19.0f, 8.0f, 120.0f, 165.0f, 300.0f }; // Replace with actual input features
     private float[] features2 = { 72.0f, 19.0f, 8.0f };
+    [SerializeField] private ConditionManager manager;
+    public void UpdateFeatures(){
+        float humidity = manager.Humidity;
+        float temperature = manager.Temperature;
+        float nitrogen = manager.Nitrogen;
+        float phosphorous = manager.Phosphorous;
+        float potassium = manager.Potassium;
+        features = new { humidity , temperature , 8.0f, nitrogen, phosphorous, potassium};
+        features2 = new { humidity, temperature, 8.0f};
+    }
     // Start is called before the first frame update
     public void StartButton()
     {
@@ -79,6 +89,8 @@ public class DecisionTreeClient : MonoBehaviour
             }
         }
     }
+
+    
 
     // Helper class for serializing the dictionary to JSON
     [System.Serializable]
