@@ -12,4 +12,6 @@ public static class EventManager
    public static UnityEvent<GameObject> RemoveTimeOutTaskEvent = new UnityEvent<GameObject>();
 
    public static UnityEvent CloseTutorial = new UnityEvent();
+   public static UnityEvent<int> GiveUserPointsAfterTutorial = new UnityEvent<int>();
+
 }

@@ -750,10 +750,10 @@ RectTransform:
   - {fileID: 4164676611728428216}
   m_Father: {fileID: 184199667349173568}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 399.99997, y: -134.99998}
-  m_SizeDelta: {x: 800, y: 100.000015}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 800, y: 0}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &2341918175181971408
 MonoBehaviour:
@@ -771,6 +771,7 @@ MonoBehaviour:
   background: {fileID: 5177546930715764974}
   minThreshold: {fileID: 5644011720455229931}
   maxThreshold: {fileID: 7425861753644437191}
+  refreshText: {fileID: 0}
   datatype: 3
   socketClient: {fileID: 0}
   refreshButton: {fileID: 6667033130183641931}
@@ -3748,10 +3749,10 @@ RectTransform:
   - {fileID: 3397038904822093698}
   m_Father: {fileID: 184199667349173568}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 399.99997, y: -176.66664}
-  m_SizeDelta: {x: 800, y: 100.000015}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 800, y: 0}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &8016920641866667455
 MonoBehaviour:
@@ -3769,6 +3770,7 @@ MonoBehaviour:
   background: {fileID: 8012134993644383063}
   minThreshold: {fileID: 3490874181249009706}
   maxThreshold: {fileID: 57866109995332046}
+  refreshText: {fileID: 0}
   datatype: 4
   socketClient: {fileID: 0}
   refreshButton: {fileID: 1401477064051123080}
@@ -3836,6 +3838,7 @@ MonoBehaviour:
   NextButton: {fileID: 6599430778736392926}
   LightButton: {fileID: 5701523952630191603}
   EntireTutorial: {fileID: 5276701422367755287}
+  User: {fileID: 0}
 --- !u!1 &2630797792695761949
 GameObject:
   m_ObjectHideFlags: 0
@@ -4839,10 +4842,10 @@ RectTransform:
   - {fileID: 4269390985080355047}
   m_Father: {fileID: 184199667349173568}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 399.99997, y: -10}
-  m_SizeDelta: {x: 1500, y: 100.000015}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 1500, y: 0}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &3956795186850183598
 MonoBehaviour:
@@ -4860,6 +4863,7 @@ MonoBehaviour:
   background: {fileID: 6905681655593150140}
   minThreshold: {fileID: 5839572499983913862}
   maxThreshold: {fileID: 7589775657364836143}
+  refreshText: {fileID: 0}
   datatype: 0
   socketClient: {fileID: 0}
   refreshButton: {fileID: 2618305249866453001}
@@ -5621,10 +5625,10 @@ RectTransform:
   - {fileID: 4953648622607271456}
   m_Father: {fileID: 184199667349173568}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 399.99997, y: -218.3333}
-  m_SizeDelta: {x: 800, y: 100.000015}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 800, y: 0}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &2153487736581264546
 MonoBehaviour:
@@ -5642,6 +5646,7 @@ MonoBehaviour:
   background: {fileID: 5540197211502984504}
   minThreshold: {fileID: 7164672698601438309}
   maxThreshold: {fileID: 2164347088968045846}
+  refreshText: {fileID: 0}
   datatype: 5
   socketClient: {fileID: 0}
   refreshButton: {fileID: 2736603431704312310}
@@ -8224,10 +8229,10 @@ RectTransform:
   - {fileID: 5569742720271596670}
   m_Father: {fileID: 184199667349173568}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 399.99997, y: -51.666664}
-  m_SizeDelta: {x: 800, y: 100.000015}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 800, y: 0}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &2517684122118855458
 MonoBehaviour:
@@ -8245,6 +8250,7 @@ MonoBehaviour:
   background: {fileID: 5545691280723194265}
   minThreshold: {fileID: 4480010110389775047}
   maxThreshold: {fileID: 7398370192649119128}
+  refreshText: {fileID: 0}
   datatype: 1
   socketClient: {fileID: 0}
   refreshButton: {fileID: 3833975996992830266}
@@ -9687,10 +9693,10 @@ RectTransform:
   - {fileID: 7564433797185981524}
   m_Father: {fileID: 184199667349173568}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 399.99997, y: -93.33333}
-  m_SizeDelta: {x: 800, y: 100.000015}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 800, y: 0}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &2555163517022318204
 MonoBehaviour:
@@ -9708,6 +9714,7 @@ MonoBehaviour:
   background: {fileID: 7791465786591397628}
   minThreshold: {fileID: 2184582213438789275}
   maxThreshold: {fileID: 1330970532594658790}
+  refreshText: {fileID: 0}
   datatype: 2
   socketClient: {fileID: 0}
   refreshButton: {fileID: 184787389135248898}

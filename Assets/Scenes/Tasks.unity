@@ -1631,6 +1631,8 @@ MonoBehaviour:
   menu: {fileID: 857152302}
   notification: {fileID: 469001039}
   uiPanel: {fileID: 1341086899}
+  header: {fileID: 0}
+  body: {fileID: 0}
 --- !u!1 &789700453
 GameObject:
   m_ObjectHideFlags: 0
@@ -1874,7 +1876,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4459e6f1e9d72f947b47efe5d2816e75, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TutorialMenu: {fileID: 857152302}
+  TutorialMenuHeader: {fileID: 0}
+  TutorialMenuBody: {fileID: 0}
   Notif: {fileID: 469001039}
 --- !u!1 &1190429926
 GameObject:
@@ -2171,6 +2174,8 @@ MonoBehaviour:
   menu: {fileID: 1390898176}
   notification: {fileID: 469001039}
   uiPanel: {fileID: 1341086899}
+  header: {fileID: 0}
+  body: {fileID: 0}
 --- !u!1 &1200450617
 GameObject:
   m_ObjectHideFlags: 0

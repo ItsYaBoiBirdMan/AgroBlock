@@ -30,7 +30,8 @@ public class StatusScreenTutorialManager : MonoBehaviour
         {
             Debug.Log("Tutorial Completed");
             EventManager.CloseTutorial.Invoke();
-            User.AddPoints(1000);
+            //User.AddPoints(1000);
+            EventManager.GiveUserPointsAfterTutorial.Invoke(1000);
             Destroy(EntireTutorial);
         }
 
@@ -72,4 +73,6 @@ public class StatusScreenTutorialManager : MonoBehaviour
         NextButton.interactable = true;
         LightButton.interactable = false;
     }
+
+  
 }
