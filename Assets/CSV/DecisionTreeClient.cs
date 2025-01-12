@@ -13,14 +13,16 @@ public class DecisionTreeClient : MonoBehaviour
     private float[] features = { 72.0f, 19.0f, 8.0f, 120.0f, 165.0f, 300.0f }; // Replace with actual input features
     private float[] features2 = { 72.0f, 19.0f, 8.0f };
     [SerializeField] private ConditionManager manager;
+
+    
     public void UpdateFeatures(){
         float humidity = manager.Humidity;
         float temperature = manager.Temperature;
         float nitrogen = manager.Nitrogen;
         float phosphorous = manager.Phosphorous;
         float potassium = manager.Potassium;
-        features = new { humidity , temperature , 8.0f, nitrogen, phosphorous, potassium};
-        features2 = new { humidity, temperature, 8.0f};
+        features = new float[] { humidity , temperature , 8.0f, nitrogen, phosphorous, potassium};
+        features2 = new  float[] { humidity, temperature, 8.0f};
     }
     // Start is called before the first frame update
     public void StartButton()
