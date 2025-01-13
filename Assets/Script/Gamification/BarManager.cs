@@ -110,7 +110,7 @@ public class BarManager : MonoBehaviour
         cropStage = stage;
         switch (datatype) {
             case DataType.Temperature:
-                if (!firstTime){
+                if (firstTime){
                     socketClient.OnFullTemperatureDataReceived += SetPercentTemperature;
                     socketClient.OnFullTemperatureDataReceived += setRefreshText3;
                 }
@@ -123,7 +123,7 @@ public class BarManager : MonoBehaviour
                 }
                 break;
             case DataType.Humidity:
-                if (!firstTime){
+                if (firstTime){
                     socketClient.OnHumidityDataReceived += SetPercent;
                     socketClient.OnHumidityDataReceived += setRefreshText;
                 }
@@ -131,7 +131,7 @@ public class BarManager : MonoBehaviour
                 max = crop.Soils[0].GrowthStages[stage].Humidity.Max;
                 break;
             case DataType.Light:
-                if (!firstTime){
+                if (firstTime){
                     socketClient.LightStateDataReceived += SetPercentLights;
                     socketClient.LightStateDataReceived += setRefreshText2;
                     lightButton.onClick.AddListener(ToggleLights);
@@ -140,7 +140,7 @@ public class BarManager : MonoBehaviour
                 max = crop.Soils[0].GrowthStages[stage].Light.Period.Max;
                 break;
             case DataType.Nitrogen:
-                if (!firstTime){
+                if (firstTime){
                     socketClient.OnNitrogenDataReceived += SetPercent;
                     socketClient.OnNitrogenDataReceived += setRefreshText;
                 }
@@ -148,7 +148,7 @@ public class BarManager : MonoBehaviour
                 max = crop.Soils[0].GrowthStages[stage].Nutrients.Nitrogen.Max;
                 break;
             case DataType.Phosphorus:
-                if (!firstTime){
+                if (firstTime){
                     socketClient.OnPhosphorousDataReceived += SetPercent;
                     socketClient.OnPhosphorousDataReceived += setRefreshText;
                 }
@@ -156,7 +156,7 @@ public class BarManager : MonoBehaviour
                 max = crop.Soils[0].GrowthStages[stage].Nutrients.Phosphorus.Max;
                 break;
             case DataType.Potassium:
-                if (!firstTime){
+                if (firstTime){
                     socketClient.OnPotassiumDataReceived += SetPercent;
                     socketClient.OnPotassiumDataReceived += setRefreshText;
                 }
@@ -164,7 +164,7 @@ public class BarManager : MonoBehaviour
                 max = crop.Soils[0].GrowthStages[stage].Nutrients.Potassium.Max;
                 break;
         }
-        if (!firstTime){
+        if (firstTime){
             refreshButton.onClick.AddListener(RefreshInfo);
         }
         firstTime = false;

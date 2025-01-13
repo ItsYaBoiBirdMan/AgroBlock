@@ -125,7 +125,10 @@ public class StartScript : MonoBehaviour
         } catch (Exception ex) {
             Debug.LogError($"Failed to load crops: {ex.Message}");
         }
-        
+        Debug.Log("IDK WHATS GOING ON");
+        Debug.Log(Crop);
+        Debug.Log(CurrentStage);
+        Debug.Log(day);
         barManager1.StartBar(Crop, CurrentStage, day);
         barManager2.StartBar(Crop, CurrentStage, day);
         barManager3.StartBar(Crop, CurrentStage, day);
