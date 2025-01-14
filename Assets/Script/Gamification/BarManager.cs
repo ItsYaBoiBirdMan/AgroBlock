@@ -174,6 +174,7 @@ public class BarManager : MonoBehaviour
 
     private void ToggleLights() {
         lightOnOff = !lightOnOff;
+        setLights(lightOnOff);
         if (lightOnOff){
             socketClient.SendMessageToEsp32("Lights ON 0");
         } else {
@@ -217,6 +218,7 @@ public class BarManager : MonoBehaviour
         }
     }
     private void setLights(bool lights) {
+        Debug.Log("IGOTHERE");
         string imageName;
         if (lights){
              imageName = "Lights_on"; // e.g., "item1_selector"

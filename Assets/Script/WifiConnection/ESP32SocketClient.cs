@@ -167,8 +167,8 @@ namespace Script.WifiConnection {
                     Debug.LogError("Error receiving or parsing response: " + e.Message);
                 }
             } else {
-                StartUDPDiscovery();
-                return SendMessageToEsp32(message);
+                //StartUDPDiscovery();
+                //return SendMessageToEsp32(message);
             }
             return jsonObj;
         }
