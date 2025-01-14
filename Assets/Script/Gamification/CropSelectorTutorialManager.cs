@@ -1,20 +1,17 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using Script.StateMachine;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-public class CropsDisplayer : MonoBehaviour {
-    [SerializeField] private StartScript startScript;
-    [SerializeField] private ConditionManager ConditionManager;
+
+public class CropSelectorTutorialManager : MonoBehaviour
+{
     [SerializeField] private GameObject itemPrefab;  // Prefab for each item (a button or custom prefab)
     [SerializeField] private Transform contentPanel; // The Content object inside the ScrollView
     [SerializeField] private CropsLoader cropsLoader;
     [SerializeField] private Transform conditionsLoader;
-    [SerializeField] private Transform SelectorMenu;
-    [SerializeField] private Transform HomeMenu;
-    [SerializeField] private Transform Notifications;
+    [SerializeField] private GameObject SelectorMenu;
     [SerializeField] private TMP_Dropdown dropdown;
     [SerializeField] private TextMeshProUGUI humidityText;
     [SerializeField] private TextMeshProUGUI temperatureText;
@@ -26,12 +23,19 @@ public class CropsDisplayer : MonoBehaviour {
     private bool isContentPanelActive = false;
     private CSVConverter.Crop selectedCrop;
     private int selectedSoil;
+    [SerializeField] private StartScript startScript;
+
+    [SerializeField] private List<GameObject> StepList;
+    [SerializeField] private GameObject Content;
+    [SerializeField] private Button NextButton;
+
+    private int _index;
 
     private void Start()
     {
         // Add a listener to detect value changes in the dropdown
         dropdown.onValueChanged.AddListener(OnDropdownValueChanged);
-        startMonitoringButton.onClick.AddListener(OnStartMonitoringButton);
+        //startMonitoringButton.onClick.AddListener(OnStartMonitoringButton);
     }
 
 
@@ -117,21 +121,39 @@ public class CropsDisplayer : MonoBehaviour {
 
     }
 
-    private void OnStartMonitoringButton() {
-        CSVConverter.Crop crop = new CSVConverter.Crop();
-        crop.Name = selectedCrop.Name;
-        List<CSVConverter.Soil> soils = new List<CSVConverter.Soil>();
-        soils.Add(selectedCrop.Soils[selectedSoil]);
-        crop.Soils = soils;
-        startScript.SaveCropIntoFile(crop);
-        ConditionManager.SaveStageIntoFile(0);
-        ConditionManager.SaveDayNightIntoFile(true);
-        ConditionManager.StartMonotoring(crop);
-        startScript.updateBars();
-        conditionsLoader.gameObject.SetActive(false);
-        SelectorMenu.gameObject.SetActive(false);
-        HomeMenu.gameObject.SetActive(true);
-        Notifications.gameObject.SetActive(true);
+    
+
+
+    public void CycleThroughTutorial()
+    {
+        if (_index < StepList.Count - 1)
+        {
+            StepList[_index].SetActive(false);
+            _index++;
+            StepList[_index].SetActive(true);
+        }
+        else
+        {
+            startScript.SavetimeIntoFile();
+            EventManager.GiveUserPointsAfterTutorial.Invoke(100);
+            SelectorMenu.SetActive(true);
+            gameObject.SetActive(false);
+        }
+
+        switch (_index)
+        {
+            case 1:
+                NextButton.interactable = false;
+                Content.transform.Find("Potato").GetComponent<Button>().onClick.AddListener(CycleThroughTutorial);
+                break;
+            case 2:
+                NextButton.interactable = true;
+                Content.transform.Find("Potato").GetComponent<Button>().onClick.RemoveListener(CycleThroughTutorial);
+                break;
+            case 4:
+                NextButton.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "Close";
+                break;
+        }
     }
     
     private void OnDestroy(){

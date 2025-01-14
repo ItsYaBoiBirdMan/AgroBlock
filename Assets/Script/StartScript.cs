@@ -24,6 +24,8 @@ public class StartScript : MonoBehaviour
     [SerializeField] private BarManager barManager5;
     [SerializeField] private BarManager barManager6;
 
+    [SerializeField] private GameObject CropSelectionTutorial;
+
     internal int CurrentStage;
     // Start is called before the first frame update
     public CSVConverter.Crop Crop{ private set; get; }
@@ -48,17 +50,15 @@ public class StartScript : MonoBehaviour
         StartButton.onClick.AddListener(OnStartButtonClick);
     }
     private void OnStartButtonClick() {
+        StartMenu.SetActive(false);
         if (firstTime) {
-            
-        } /*else*/ if (!hasCrop) {
-            StartMenu.SetActive(false);
+            CropSelectionTutorial.SetActive(true);
+        } else if (!hasCrop) {
             SelectorMenu.SetActive(true);
             BackButton.SetActive(false);
-            ConditionManager.StartMonotoring(Crop);
         } else {
             ConditionManager.StartMonotoring(Crop);
             updateBars();
-            StartMenu.SetActive(false);
             HomeMenu.SetActive(true);
             
             //TODO
