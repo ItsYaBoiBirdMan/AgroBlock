@@ -30,8 +30,8 @@ public class LeaderboardManager : MonoBehaviour
     private void Start()
     {
         SortLeaderboard();
-        EventManager.SendNotification.Invoke("Test");
+        /*EventManager.SendNotification.Invoke("Test");
         EventManager.SendNotification.Invoke("Test 2");
-        EventManager.SendNotification.Invoke("Test 3");
+        EventManager.SendNotification.Invoke("Test 3");*/
     }
 }

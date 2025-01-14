@@ -14,4 +14,6 @@ public static class EventManager
    public static UnityEvent CloseTutorial = new UnityEvent();
    public static UnityEvent<int> GiveUserPointsAfterTutorial = new UnityEvent<int>();
 
+   public static UnityEvent CloseAgroSimEvent = new UnityEvent();
+
 }
