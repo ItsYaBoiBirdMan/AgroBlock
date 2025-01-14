@@ -241,9 +241,9 @@ public class BarManager : MonoBehaviour
     private void setTemperatureIcon(bool day) {
         string imageName;
         if (day){
-            imageName = "Temperature_Day"; // e.g., "item1_selector"
+            imageName = "Temperature_day"; // e.g., "item1_selector"
         } else {
-            imageName = "Temperature_Night"; // e.g., "item1_selector"
+            imageName = "Temperature_night"; // e.g., "item1_selector"
         }
         
         Image itemiImage = TemperatureIcon.GetComponent<Image>();
