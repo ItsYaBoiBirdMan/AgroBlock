@@ -14,9 +14,16 @@ public class UserDataManager : MonoBehaviour
         totalPoints += points;
         currentPoints += points;
     }
+    public void SpendPoints(int points){
+        currentPoints -= points;
+    }
     public int GetTotalPoints()
     {
         return totalPoints;
+    }
+    public int GetCurrentPoints()
+    {
+        return currentPoints;
     }
 
     public string GetName()

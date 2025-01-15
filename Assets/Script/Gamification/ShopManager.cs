@@ -11,14 +11,14 @@ public class ShopManager : MonoBehaviour
 
     public void UpdateOnOpening()
     {
-        UserPoints.text = "Points: " + UserData.GetTotalPoints();
+        UserPoints.text = "Points: " + UserData.GetCurrentPoints();
     }
 
     public void Purchase(int price)
     {
-        if (UserData.GetTotalPoints() >= price)
+        if (UserData.GetCurrentPoints() >= price)
         {
-            UserData.AddPoints(-price);
+            UserData.SpendPoints(price);
             UpdateOnOpening();
         }
         else

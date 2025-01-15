@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 using Script.StateMachine;
-
+using TMPro;
 public class DecisionTreeClient : MonoBehaviour
 {
     // URL of your Flask API endpoint
@@ -13,8 +13,9 @@ public class DecisionTreeClient : MonoBehaviour
     private float[] features = { 72.0f, 19.0f, 8.0f, 120.0f, 165.0f, 300.0f }; // Replace with actual input features
     private float[] features2 = { 72.0f, 19.0f, 8.0f };
     [SerializeField] private ConditionManager manager;
+    [SerializeField] private TextMeshProUGUI text;
 
-    
+
     public void UpdateFeatures(){
         float humidity = manager.Humidity;
         float temperature = manager.Temperature;
@@ -55,6 +56,7 @@ public class DecisionTreeClient : MonoBehaviour
             if (request.result == UnityWebRequest.Result.Success)
             {
                 Debug.Log("Response: " + request.downloadHandler.text);
+                text.text = "Sugested Crop: " + request.downloadHandler.text;
             }
             else
             {
@@ -84,6 +86,7 @@ public class DecisionTreeClient : MonoBehaviour
             if (request.result == UnityWebRequest.Result.Success)
             {
                 Debug.Log("Response 2: " + request.downloadHandler.text);
+                text.text = "Sugested Crop: " + request.downloadHandler.text;
             }
             else
             {

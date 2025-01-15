@@ -185,9 +185,6 @@ namespace Script.StateMachine {
             Soil = Crop.Soils[0];
             string inputFilePath = "CurrentStage.json"; // Ensure the correct JSON filename
             string jsonFilePath = Path.Combine(Application.persistentDataPath, "JSON", inputFilePath);
-           
-        
-        
         
             // Create the JSON file if it doesn't exist
             if (!File.Exists(jsonFilePath)){
