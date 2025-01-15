@@ -16,9 +16,7 @@ public class TutorialsLoader : MonoBehaviour
 
     [SerializeField] private GameObject header;
     [SerializeField] private GameObject body;
-
-
-
+    
 
     public void OnClickTry(){
         foreach (Transform child in contentHolder) {
@@ -69,4 +67,6 @@ public class TutorialsLoader : MonoBehaviour
             }
         }
     }
+    
+    
 }

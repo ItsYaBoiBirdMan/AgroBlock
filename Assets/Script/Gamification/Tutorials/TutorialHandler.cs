@@ -30,6 +30,15 @@ namespace Script.Gamification.Tutorials{
             gameObject.GetComponent<Button>().onClick.AddListener(CompleteLoadTutorial);
         }
         
+        public void SetVideoTutorial(Tutorial newTutorial, GameObject _menu, GameObject _notification, Transform _UiPanel){
+            menu = _menu;
+            notification = _notification;
+            tutorial = newTutorial;
+            UiPanel = _UiPanel;
+            Debug.Log($"Assigned ScriptableObject: {tutorial.name}");
+            gameObject.GetComponent<Button>().onClick.AddListener(LoadVideoTutorial);
+        }
+        
 
         private void LoadTutorial(){
             notification.SetActive(false);
@@ -39,6 +48,14 @@ namespace Script.Gamification.Tutorials{
         }
         
         private void CompleteLoadTutorial(){
+            notification.SetActive(false);
+            header.SetActive(false);
+            body.SetActive(false);
+            Instantiate(tutorial.GetMenu().gameObject, UiPanel);
+
+        }
+        
+        private void LoadVideoTutorial(){
             notification.SetActive(false);
             header.SetActive(false);
             body.SetActive(false);

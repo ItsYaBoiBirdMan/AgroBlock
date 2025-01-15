@@ -16,4 +16,6 @@ public static class EventManager
 
    public static UnityEvent CloseAgroSimEvent = new UnityEvent();
 
+   public static UnityEvent CloseVideoTutorial = new UnityEvent();
+
 }

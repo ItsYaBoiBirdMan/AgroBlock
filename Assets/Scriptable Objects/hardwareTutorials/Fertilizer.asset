@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Fertilizer
   m_EditorClassIdentifier: 
   tutorialName: Fertilizer
-  taskMenu: {fileID: 0}
-  pointsRewardAmount: 0
+  taskMenu: {fileID: 6923378085531172490, guid: cac9314bed71b064998e40a877377fcd, type: 3}
+  pointsRewardAmount: 200
